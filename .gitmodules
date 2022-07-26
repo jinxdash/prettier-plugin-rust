@@ -1,0 +1,3 @@
+[submodule "ext/jinx-rust"]
+	path = ext/jinx-rust
+	url = https://github.com/jinxdash/jinx-rust.git

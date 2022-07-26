@@ -1,0 +1,8 @@
+{
+	"extends": "../tsconfig.base.json",
+	"include": ["../tests", "../scripts"],
+	"references": [{ "path": "../tsconfig.json" }, { "path": "../ext/jinx-rust/scripts/tsconfig.json" }],
+	"compilerOptions": {
+		"rootDir": ".."
+	}
+}

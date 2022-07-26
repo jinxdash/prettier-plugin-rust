@@ -1,0 +1,48 @@
+{
+	"name": "prettier-rust",
+	"displayName": "Prettier - Code formatter (Rust)",
+	"publisher": "jinxdash",
+	"repository": "https://github.com/jinxdash/prettier-plugin-rust",
+	"author": "jinxdash <jinxdash.github@gmail.com> (https://github.com/jinxdash)",
+	"description": "Code formatter using prettier and prettier-plugin-rust",
+	"version": "0.0.1",
+	"engines": {
+		"vscode": "^1.69.0"
+	},
+	"categories": [
+		"Formatters"
+	],
+	"scripts": {
+		"bundle": "esbuild src/index.ts --bundle --outfile=index.js --platform=node --external:vscode --external:prettier --external:prettier-plugin-rust  --external:jinx-rust --legal-comments=inline",
+		"watch": "pnpm run bundle --watch"
+	},
+	"contributes": {
+		"languages": [
+			{
+				"id": "rust",
+				"aliases": [
+					"rs"
+				],
+				"extensions": [
+					"rs"
+				]
+			}
+		]
+	},
+	"devDependencies": {
+		"@types/node": "^18.0.6",
+		"@types/vscode": "^1.69.0",
+		"esbuild": "^0.14.49",
+		"typescript": "^4.7.4",
+		"tsup": "^6.1.3"
+	},
+	"dependencies": {
+		"prettier": "^2.7.1",
+		"jinx-rust": "^0.1.4",
+		"prettier-plugin-rust": "file:.."
+	},
+	"main": "index.js",
+	"activationEvents": [
+		"onStartupFinished"
+	]
+}
