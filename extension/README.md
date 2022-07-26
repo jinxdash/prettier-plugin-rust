@@ -9,7 +9,7 @@
 _The massively popular [Prettier](https://prettier.io/) code formatter, now with [Rust](https://www.rust-lang.org/) support!_
 
 
-### A _formatter_ -- not a linter?!
+### A _formatter_ -- not a linter!
 
 Prettier Rust doesn't panic on missing semicolons, _in fact it AUTO-COMPLETES them!_
 

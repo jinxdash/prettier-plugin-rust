@@ -10,7 +10,7 @@ _The massively popular [Prettier](https://prettier.io/) code formatter, now with
 
 -   **Get Started:** Search for the [Prettier - Code formatter (Rust)](https://marketplace.visualstudio.com/items?itemName=jinxdash.prettier-rust) extension in VSCode.
 
-### A _formatter_ -- not a linter?!
+### A _formatter_ -- not a linter!
 
 Prettier Rust doesn't panic on missing semicolons, _in fact it AUTO-COMPLETES them!_
 
