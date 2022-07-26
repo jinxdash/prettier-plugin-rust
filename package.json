@@ -1,8 +1,11 @@
 {
 	"name": "prettier-plugin-rust",
-	"version": "0.0.12",
+	"version": "0.1.0",
 	"description": "Prettier plugin for Rust",
-	"repository": "https://github.com/jinxdash/prettier-plugin-rust",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/jinxdash/prettier-plugin-rust.git"
+	},
 	"author": "jinxdash <jinxdash.github@gmail.com> (https://github.com/jinxdash)",
 	"keywords": [
 		"prettier",
