@@ -14,8 +14,7 @@ _The massively popular [Prettier](https://prettier.io/) code formatter, now with
 
 Prettier Rust doesn't panic on missing semicolons, _in fact it AUTO-COMPLETES them!_
 
-Thanks to the specially built [`jinx-rust`](https://www.github.com/jinxdash/jinx-rust/) parser, Prettier is completely independent from Rust's strict validation process.  
-As such, it is able to format rust just like it formats typescript!
+Thanks to the specially built [`jinx-rust`](https://www.github.com/jinxdash/jinx-rust/) parser, Prettier is completely independent from Rust's strict validation process. As such, it is able to format rust just like it formats typescript!
 
 ## Configuration
 
