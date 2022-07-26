@@ -2,14 +2,12 @@ import { rs } from "jinx-rust";
 import path from "node:path";
 import prettier, { Config, resolveConfig } from "prettier";
 import * as plugin from "prettier-plugin-rust";
-import { commands, ExtensionContext, languages, Position, Range, TextDocument, TextEdit, window } from "vscode";
+import { ExtensionContext, languages, Position, Range, TextDocument, TextEdit, window } from "vscode";
 
 const console = createOutputChannel("Prettier (Rust)");
 
 console.log(`VSCode Extension: ${process.env.EXTENSION_NAME || "jinxdash.prettier-rust"}@${process.env.EXTENSION_VERSION || "dev"}`);
 export async function activate(context: ExtensionContext) {
-	console.log("Activated");
-	console.log(await commands.getCommands());
 	context.subscriptions.push(
 		languages.registerDocumentFormattingEditProvider("rust", {
 			async provideDocumentFormattingEdits(document) {
@@ -57,17 +55,13 @@ function tryFormat(doc: TextDocument, config: prettier.Config) {
 	try {
 		return prettier.format(doc.getText(), config);
 	} catch (e) {
-		if ((e as any).url) {
+		if ((e as any).loc) {
 			try {
 				rs.parseFile(doc.getText(), { filepath: config.filepath });
 			} catch (_e) {
 				const e2 = _e as rs.ParserError;
-				window.showTextDocument(doc, {
-					selection: new Range(
-						new Position(e2.loc.start.line - 1, e2.loc.start.column - 1),
-						new Position(e2.loc.start.line - 1, e2.loc.start.column - 1)
-					),
-				});
+				const pos = new Position(e2.loc.start.line - 1, e2.loc.start.column - 1);
+				window.showTextDocument(doc, { selection: new Range(pos, pos) });
 				window.showErrorMessage(e2.message);
 			}
 		} else {
