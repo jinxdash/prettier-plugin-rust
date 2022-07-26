@@ -8,7 +8,7 @@
 
 _The massively popular [Prettier](https://prettier.io/) code formatter, now with [Rust](https://www.rust-lang.org/) support!_
 
--   **Get Started:** Search for the [Prettier - Code formatter (Rust)]() extension in VSCode.
+-   **Get Started:** Search for the [Prettier - Code formatter (Rust)](https://marketplace.visualstudio.com/items?itemName=jinxdash.prettier-rust) extension in VSCode.
 
 ### A _formatter_ -- not a linter?!
 
