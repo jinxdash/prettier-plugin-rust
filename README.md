@@ -50,7 +50,7 @@ If you have `rust-analyzer` or another extension that formats `rust` files insta
 
 ```JSON
 "[rust]": {
-		"editor.defaultFormatter": "jinxdash.prettier-rust"
+    "editor.defaultFormatter": "jinxdash.prettier-rust"
 }
 ```
 
