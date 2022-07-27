@@ -43,7 +43,7 @@ To ignore something, add `// prettier-ignore` above it.
 
 - Either install the standalone extension `Prettier - Code formatter (Rust)` or
 
-- use the official one which has issues loading plugins and _will NOT auto-update them_. [Read about plugins in Prettier docs.](https://prettier.io/docs/en/plugins.html)
+- Use the official extension which has quirks loading plugins, and _does not auto-update them_. [Read about plugins in Prettier docs.](https://prettier.io/docs/en/plugins.html)
 
 
 If you have `rust-analyzer` or another extension that formats `rust` files installed, VSCode will prompt you to choose your preferred formatter the next time you attempt to format a file. If you already had one defined, you may have to adjust your settings:
