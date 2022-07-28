@@ -49,13 +49,9 @@ To ignore something in a file, add `// prettier-ignore` above it.
     <details>
     <summary>Instructions</summary>
 
-    -   Install official extension [Prettier - Code formatter](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
+    -   Install the official extension [Prettier - Code formatter](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
 
-    -   Install the plugin globally and in the project you use it in
-
-    ```
-    npm install --global prettier-plugin-rust
-    ```
+    -   Install the plugin in the project
 
     ```
     npm install --save-dev prettier-plugin-rust
@@ -63,10 +59,9 @@ To ignore something in a file, add `// prettier-ignore` above it.
 
     -   The plugin _should_ be detected, some things can help if it doesn't:
 
-        -   Add `"plugins": ["prettier-plugin-rust"]` to your global and project prettier configs
+        -   Add `"plugins": ["prettier-plugin-rust"]` to your project's prettier config
         -   If your project only uses prettier for rust files:  
             Try adding `"parser": "jinx-rust"`, (that's the parser used by `prettier-plugin-rust`).
-        -   If the plugin is found in projects but not globally, try installing the plugin locally `npm install prettier-plugin-rust` INSIDE the folder where the global instance of prettier is located.
         -   [Read more about Prettier plugins](https://prettier.io/docs/en/plugins.html)
         -   Use the standalone extension instead.
 
