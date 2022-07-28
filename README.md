@@ -61,7 +61,7 @@ _Not available yet_
 
 ### npm
 
-The plugin is published on npm as `prettier-plugin-rust` and can be used like any other prettier plugin.
+The plugin is published on npm as `prettier-plugin-rust` and can be used like any other prettier plugin in the CLI.
 
 ```
 npm install --save-dev prettier-plugin-rust
