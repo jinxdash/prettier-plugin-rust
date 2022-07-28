@@ -21,14 +21,14 @@ As such, it is able to format rust just like it formats typescript!
 
 Configure `prettier` by creating a `.prettierrc.toml` file, or [any other file format listed in prettier docs](https://prettier.io/docs/en/configuration.html).
 
-
-| API Option                   | CLI Option                     | Default | Docs                                                                           |
-| ---------------------------- | ------------------------------ | :-----: | ------------------------------------------------------------------------------------- |
+| API Option                   | CLI Option                     | Default | Docs                                                           |
+| ---------------------------- | ------------------------------ | :-----: | -------------------------------------------------------------- |
+| `useTabs`                    | --use-tabs                     |  false  | _[link](https://prettier.io/docs/en/options.html#tabs)_        |
 | `tabWidth`                   | --tab-width                    |    4    | _[link](https://prettier.io/docs/en/options.html#tab-width)_   |
 | `printWidth`                 | --print-width                  |   100   | _[link](https://prettier.io/docs/en/options.html#print-width)_ |
 | `endOfLine`                  | --end-of-line                  |  "lf"   | _[link](https://prettier.io/docs/en/options.html#end-of-line)_ |
-| `trailingComma`              | --trailing-comma               |         | Not supported yet.                                                                    |
-| `embeddedLanguageFormatting` | --embedded-language-formatting |         | Not supported yet.                                                                    |
+| `trailingComma`              | --trailing-comma               |         | Not supported yet.                                             |
+| `embeddedLanguageFormatting` | --embedded-language-formatting |         | Not supported yet.                                             |
 
 ### Ignoring stuff
 
@@ -42,10 +42,9 @@ To ignore something in a file, add `// prettier-ignore` above it.
 
 ### VSCode
 
-- Either install the standalone extension `Prettier - Code formatter (Rust)` or
+-   Either install the standalone extension `Prettier - Code formatter (Rust)` or
 
-- Use the official extension which has quirks loading plugins, and _does not auto-update them_. [Read about plugins in Prettier docs.](https://prettier.io/docs/en/plugins.html)
-
+-   Use the official extension which has quirks loading plugins, and _does not auto-update them_. [Read about plugins in Prettier docs.](https://prettier.io/docs/en/plugins.html)
 
 If you have `rust-analyzer` or another extension that formats `rust` files installed, VSCode will prompt you to choose your preferred formatter the next time you attempt to format a file. If you already had one defined, you may have to adjust your settings:
 

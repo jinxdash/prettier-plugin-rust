@@ -19,14 +19,14 @@ As such, it is able to format rust just like it formats typescript!
 
 Configure `prettier` by creating a `.prettierrc.toml` file, or [any other file format listed in prettier docs](https://prettier.io/docs/en/configuration.html).
 
-
-| API Option                   | CLI Option                     | Default | Docs                                                                           |
-| ---------------------------- | ------------------------------ | :-----: | ------------------------------------------------------------------------------------- |
+| API Option                   | CLI Option                     | Default | Docs                                                           |
+| ---------------------------- | ------------------------------ | :-----: | -------------------------------------------------------------- |
+| `useTabs`                    | --use-tabs                     |  false  | _[link](https://prettier.io/docs/en/options.html#tabs)_        |
 | `tabWidth`                   | --tab-width                    |    4    | _[link](https://prettier.io/docs/en/options.html#tab-width)_   |
 | `printWidth`                 | --print-width                  |   100   | _[link](https://prettier.io/docs/en/options.html#print-width)_ |
 | `endOfLine`                  | --end-of-line                  |  "lf"   | _[link](https://prettier.io/docs/en/options.html#end-of-line)_ |
-| `trailingComma`              | --trailing-comma               |         | Not supported yet.                                                                    |
-| `embeddedLanguageFormatting` | --embedded-language-formatting |         | Not supported yet.                                                                    |
+| `trailingComma`              | --trailing-comma               |         | Not supported yet.                                             |
+| `embeddedLanguageFormatting` | --embedded-language-formatting |         | Not supported yet.                                             |
 
 ### Ignoring stuff
 
@@ -46,5 +46,4 @@ npm install --save-dev prettier-plugin-rust
 
 Refer to the [Prettier documentation](https://prettier.io/docs/en/cli.html) for available CLI commands.
 
-
-##  Report issues at https://www.github.com/jinxdash/prettier-plugin-rust/issues
+## Report issues at https://www.github.com/jinxdash/prettier-plugin-rust/issues
