@@ -10,12 +10,17 @@
 		"directory": "extension"
 	},
 	"author": "jinxdash <jinxdash.github@gmail.com> (https://github.com/jinxdash)",
-	"version": "0.1.2",
+	"version": "0.1.3",
 	"engines": {
 		"vscode": "^1.69.0"
 	},
 	"categories": [
 		"Formatters"
+	],
+	"keywords": [
+		"rust",
+		"formatter",
+		"prettier"
 	],
 	"scripts": {
 		"bundle": "esbuild src/index.ts --bundle --outfile=index.js --format=cjs --platform=node --external:vscode",
