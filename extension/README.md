@@ -8,10 +8,9 @@
 
 _The massively popular [Prettier](https://prettier.io/) code formatter, now with [Rust](https://www.rust-lang.org/) support!_
 
-
 ### A _formatter_ -- not a linter!
 
-Prettier Rust doesn't panic on missing semicolons, _in fact it AUTO-COMPLETES them!_
+Prettier Rust doesn't panic on missing semicolons, _in fact it auto-completes them!_
 
 Thanks to the specially built [`jinx-rust`](https://www.github.com/jinxdash/jinx-rust/) parser, Prettier is completely independent from Rust's strict validation process.  
 As such, it is able to format rust just like it formats typescript!
@@ -20,7 +19,6 @@ As such, it is able to format rust just like it formats typescript!
 
 Configure `prettier` by creating a `.prettierrc.toml` file, or [any other file format listed in prettier docs](https://prettier.io/docs/en/configuration.html).
 
-To ignore files, list them in `.prettierignore` (like you would `.gitignore`)
 
 | API Option                   | CLI Option                     | Default | Docs                                                                           |
 | ---------------------------- | ------------------------------ | :-----: | ------------------------------------------------------------------------------------- |
@@ -32,8 +30,21 @@ To ignore files, list them in `.prettierignore` (like you would `.gitignore`)
 
 ### Ignoring stuff
 
-To ignore something, add `// prettier-ignore` above it.
+To ignore files, list them in `.prettierignore` (like you would `.gitignore`)
+
+To ignore something in a file, add `// prettier-ignore` above it.
 
 `#[rustfmt::skip]` and `#![rustfmt::skip]` are also supported (locally).
+
+### npm
+
+The plugin is published on npm as `prettier-plugin-rust` and can be used like any other prettier plugin in the CLI.
+
+```
+npm install --save-dev prettier-plugin-rust
+```
+
+Refer to the [Prettier documentation](https://prettier.io/docs/en/cli.html) for available CLI commands.
+
 
 ##  Report issues at https://www.github.com/jinxdash/prettier-plugin-rust/issues
