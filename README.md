@@ -42,17 +42,36 @@ To ignore something in a file, add `// prettier-ignore` above it.
 
 ### VSCode
 
--   Either install the standalone extension `Prettier - Code formatter (Rust)` or
+-   Install the standalone extension [Prettier - Code formatter (Rust)](https://marketplace.visualstudio.com/items?itemName=jinxdash.prettier-rust) **[recommended]**
 
--   Use the official extension which has quirks loading plugins, and _does not auto-update them_. [Read about plugins in Prettier docs.](https://prettier.io/docs/en/plugins.html)
+-   Alternatively, you may also install the Rust plugin with the official Prettier extension.  
+    _Note that the Prettier extension has issues auto-loading plugins, and it won't auto-update them._
+    <details>
+    <summary>Instructions</summary>
 
-If you have `rust-analyzer` or another extension that formats `rust` files installed, VSCode will prompt you to choose your preferred formatter the next time you attempt to format a file. If you already had one defined, you may have to adjust your settings:
+    -   Install official extension [Prettier - Code formatter](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
 
-```JSON
-"[rust]": {
-    "editor.defaultFormatter": "jinxdash.prettier-rust"
-}
-```
+    -   Install the plugin globally and in the project you use it in
+
+    ```
+    npm install --global prettier-plugin-rust
+    ```
+
+    ```
+    npm install --save-dev prettier-plugin-rust
+    ```
+
+    -   The plugin _should_ be detected, some things can help if it doesn't:
+
+        -   Add `"plugins": ["prettier-plugin-rust"]` to your global and project prettier configs
+        -   If your project only uses prettier for rust files:  
+            Try adding `"parser": "jinx-rust"`, (that's the parser used by `prettier-plugin-rust`).
+        -   If the plugin is found in projects but not globally, try installing the plugin locally `npm install prettier-plugin-rust` INSIDE the folder where the global instance of prettier is located.
+        -   [Read more about Prettier plugins](https://prettier.io/docs/en/plugins.html)
+        -   Use the standalone extension instead.
+
+</details>
+
 
 ### crate
 

@@ -36,6 +36,10 @@ To ignore something in a file, add `// prettier-ignore` above it.
 
 `#[rustfmt::skip]` and `#![rustfmt::skip]` are also supported (locally).
 
+### crate
+
+_Not available yet_
+
 ### npm
 
 The plugin is published on npm as `prettier-plugin-rust` and can be used like any other prettier plugin in the CLI.
@@ -46,4 +50,16 @@ npm install --save-dev prettier-plugin-rust
 
 Refer to the [Prettier documentation](https://prettier.io/docs/en/cli.html) for available CLI commands.
 
-## Report issues at https://www.github.com/jinxdash/prettier-plugin-rust/issues
+### Troubleshooting
+
+-   If you have multiple formatters, make sure VSCode settings use the right one:
+
+```JSON
+"[rust]": {
+    "editor.defaultFormatter": "jinxdash.prettier-rust"
+}
+```
+
+-   You can see error stacks in the Output tab (`CTRL+Shift+U`), channel `Prettier (Rust)` or `Log (Extension Host)`
+
+Report issues at https://www.github.com/jinxdash/prettier-plugin-rust/issues
