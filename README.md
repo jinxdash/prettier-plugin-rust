@@ -44,7 +44,7 @@ To ignore something in a file, add `// prettier-ignore` above it.
 
 -   Install the standalone extension [Prettier - Code formatter (Rust)](https://marketplace.visualstudio.com/items?itemName=jinxdash.prettier-rust) **[recommended]**
 
--   Alternatively, if your project includes a `package.json`, you may install the plugin locally and use the official Prettier extension intead.  
+-   Alternatively, if your project uses javascript and includes a `package.json`, you may install the plugin locally and use the official extension.  
     _Note that the Prettier extension has issues auto-loading plugins, and it won't auto-update them._
     <details>
     <summary>Instructions</summary>
