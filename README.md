@@ -10,79 +10,125 @@ _The massively popular [Prettier](https://prettier.io/) code formatter, now with
 
 -   **Get Started:** Search for the [Prettier - Code formatter (Rust)](https://marketplace.visualstudio.com/items?itemName=jinxdash.prettier-rust) extension in VSCode.
 
-### A _formatter_ -- not a linter!
+### Why Prettier?
 
-Prettier Rust doesn't panic on missing semicolons, _in fact it auto-completes them!_
+_Prettier Rust brings 1:1 the great developer experience millions expect and love from Prettier Typescript to the Rust Language._
 
-Thanks to the specially built [`jinx-rust`](https://www.github.com/jinxdash/jinx-rust/) parser, Prettier is completely independent from Rust's strict validation process.  
-As such, it is able to format rust just like it formats typescript!
+-   _Press save and the code is formatted._ What usually happens once people start using Prettier is that they realize how much time and mental energy they actually spend formatting their code. With Prettier editor integration, you can just press that magic key binding and poof, the code is formatted. This is an eye-opening experience if anything.
+
+-   _Put an end to style debates._ Prettier is not a kitchen-sink code formatter that attempts to print your code in any way you wish. It is opinionated, and fully automatic.
+
+-   _Prettier Rust is completely independent from Rust's Compiler and validation process._ It couldn't care less if your code doesn't compile, is missing annotations and has minor syntax issues. It formats and fills in the formalities on your behalf.
+
+### Example
+
+```rs
+const LEET = 1337
+/// My WIP code draft
+#![feature(crate_visibility_modifier)]
+async crate fn foo(arg) {
+  arg.0 *= 3.14 + LEET & 1337
+  arg.1(|b, c| -> B &c).await
+}
+```
+
+-   #### Prettier Rust
+
+    ```rs
+    const LEET = 1337;
+    #![feature(crate_visibility_modifier)]
+    /// My WIP code draft
+    crate async fn foo(arg) {
+        arg.0 *= (3.14 + LEET) & 1337;
+        (arg.1)(|b, c| -> B { &c }).await
+    }
+    ```
+
+-   <details>
+      <summary>Compare with cargo fmt</summary>
+
+    ```sh
+    # Actual attempt:
+    [ERROR] ...84 lines, 9 errors, 6 help, 4 notes
+    # After manually fixing all issues:
+    +4 whitespace characters ✓
+    ```
+
+    </details>
 
 ## Configuration
 
-Configure `prettier` by creating a `.prettierrc.toml` file, or [any other file format listed in prettier docs](https://prettier.io/docs/en/configuration.html).
+Create a `.prettierrc.toml` file, or [any other supported format](https://prettier.io/docs/en/configuration.html).
 
-| API Option                   | CLI Option                     | Default | Docs                                                           |
-| ---------------------------- | ------------------------------ | :-----: | -------------------------------------------------------------- |
-| `useTabs`                    | --use-tabs                     |  false  | _[link](https://prettier.io/docs/en/options.html#tabs)_        |
-| `tabWidth`                   | --tab-width                    |    4    | _[link](https://prettier.io/docs/en/options.html#tab-width)_   |
-| `printWidth`                 | --print-width                  |   100   | _[link](https://prettier.io/docs/en/options.html#print-width)_ |
-| `endOfLine`                  | --end-of-line                  |  "lf"   | _[link](https://prettier.io/docs/en/options.html#end-of-line)_ |
-| `trailingComma`              | --trailing-comma               |         | Not supported yet.                                             |
-| `embeddedLanguageFormatting` | --embedded-language-formatting |         | Not supported yet.                                             |
+```toml
+# .prettierrc.toml # And yes, this is the full list
+useTabs = false
+tabWidth = 4
+printWidth = 100
+endOfLine = "lf"
+trailingComma = "es5"               # not supported yet
+embeddedLanguageFormatting = "auto" # not supported yet
+```
 
 ### Ignoring stuff
 
-To ignore files, list them in `.prettierignore` (like you would `.gitignore`)
+To ignore files, list them in a `.prettierignore` file (same format as `.gitignore`)
 
 To ignore something in a file, add `// prettier-ignore` above it.
 
-`#[rustfmt::skip]` and `#![rustfmt::skip]` are also supported (locally).
+`#[rustfmt::skip]` and `#![rustfmt::skip]` are also supported locally.
 
-## Installation
+## Editor integration
 
-### VSCode
+-   ### _Recommended:_ Standalone Extension
 
--   Install the standalone extension [Prettier - Code formatter (Rust)](https://marketplace.visualstudio.com/items?itemName=jinxdash.prettier-rust) **[recommended]**
+    _Easy install, auto-updates._
 
--   Alternatively, you may also install the Rust plugin with the official Prettier extension.  
-    _Note that the Prettier extension has issues auto-loading plugins, and it won't auto-update them._
-    <details>
-    <summary>Instructions</summary>
+    -   VSCode | Search and install `Prettier - Code formatter (Rust)` [[direct link]](https://marketplace.visualstudio.com/items?itemName=jinxdash.prettier-rust)
 
-    -   Install official extension [Prettier - Code formatter](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
+    -   _Request your favorite editor:_ [[file an issue]](https://github.com/jinxdash/prettier-plugin-rust/issues/new)
 
-    -   Install the plugin globally and in the project you use it in
+-   ### _Alternative:_ Core Extension Plugin
 
-    ```
-    npm install --global prettier-plugin-rust
-    ```
+    _Requires [NodeJS](https://nodejs.dev/download/) + [Prettier Extension](https://prettier.io/docs/en/editors.html)_ (built-in Jetbrains IDEs)
 
-    ```
-    npm install --save-dev prettier-plugin-rust
+    ```sh
+    npm install --global prettier-plugin-rust prettier
     ```
 
-    -   The plugin _should_ be detected, some things can help if it doesn't:
+    _To update:_ `npm upgrade --global prettier-plugin-rust prettier`  
+    _To check installed version:_ `npm ls -g --depth=0 prettier-plugin-rust prettier`  
+    _To check latest version:_ `npm info prettier-plugin-rust version`
 
-        -   Add `"plugins": ["prettier-plugin-rust"]` to your global and project prettier configs
-        -   If your project only uses prettier for rust files:  
-            Try adding `"parser": "jinx-rust"`, (that's the parser used by `prettier-plugin-rust`).
-        -   If the plugin is found in projects but not globally, try installing the plugin locally `npm install prettier-plugin-rust` INSIDE the folder where the global instance of prettier is located.
-        -   [Read more about Prettier plugins](https://prettier.io/docs/en/plugins.html)
-        -   Use the standalone extension instead.
+## Project integration
 
-</details>
+-   ### Rust Project
 
+    _Not available yet_
 
-### crate
+    > In javascript projects, one usually installs prettier (and plugins if any) as devonly dependencies. The `prettier` CLI and extension then load prettier packages from deps, and this ensures that everyone working on the project has the same configuration. This doesn't interop with rust projects, as there's neither a `package.json` file or a way to install npm packages. There is no definitive solution as of time of writing, and help on this matter is appreciated.
 
-_Not available yet_
+-   ### Rust Project with npm
 
-### npm
+    _Requires [NodeJS](https://nodejs.dev/download/)_
 
-The plugin is published on npm as `prettier-plugin-rust` and can be used like any other prettier plugin in the CLI.
+    -   Install `prettier` and `prettier-plugin-rust` in the project
 
-```
-npm install --save-dev prettier-plugin-rust
-```
+        ```sh
+        npm install --save-dev prettier-plugin-rust prettier
+        ```
 
-Refer to the [Prettier documentation](https://prettier.io/docs/en/cli.html) for available CLI commands.
+    -   Link to the plugin's location in your prettier config:
+
+        ```json
+          "plugins": ["./node_modules/prettier-plugin-rust"]
+        ```
+
+    -   Prettier CLI can now format rust files. E.g. run:
+        ```sh
+        prettier --write **/*.rs
+        ```
+
+    Refer to the [Prettier documentation](https://prettier.io/docs/en/cli.html) for all available CLI commands.
+
+    > _If you opted not to use the Standalone Extension_: Be aware that there is an issue with the core Prettier Extension where it's not able to register correctly as a rust formatter in a project that has the rust plugin installed. To make it register, you need to install any version of the plugin globally and reload your IDE. This issue does not concern the CLI.
