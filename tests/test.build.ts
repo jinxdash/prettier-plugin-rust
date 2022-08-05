@@ -1,12 +1,17 @@
+import { exec } from "node:child_process";
+import { promisify } from "node:util";
 import prettier from "prettier";
 import { testBuilds } from "../ext/jinx-rust/scripts/utils/build";
-import * as plugin_esm from "../index.js";
+// import * as plugin_esm from "../index.js";
 import * as plugin from "../src/index";
+
+// test esm import
+await promisify(exec)('node -e "import(`./index.js`)"');
 
 testBuilds(
 	plugin,
 	{
-		esm: plugin_esm,
+		esm: await import("../index.js"),
 		cjs: (await import("../index.cjs")).default,
 	},
 	function formatWithPlugin(file, plugin) {

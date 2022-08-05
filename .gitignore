@@ -16,3 +16,4 @@ node_modules
 /index.*
 /extension/index.*
 *.vsix
+/crate/target

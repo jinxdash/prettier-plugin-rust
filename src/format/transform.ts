@@ -326,16 +326,22 @@ function insert_blocks(parent: Node | undefined, key: string | undefined, node: 
 	if (parent && key) {
 		if (
 			!is_ExpressionStatement(parent) &&
-			(is_FlowControlExpression(node) || //
+			(false ||
+				// "1 + break" -> "1 + { break; }"
+				is_FlowControlExpression(node) ||
+				// "1 + a = b" -> "1 + { a = b; }"
 				(!isReadingSnippet() && is_ReassignmentNode(node) && !(is_ReassignmentNode(parent) && parent.left === node)))
 		) {
 			reassignNodeProperty(blockify(node), parent, key, index);
 		} else if (
-			is_ClosureFunctionExpression(node) /* || is_MatchExpressionCase(node) */ &&
-			((is_ExpressionWithBodyOrCases(node.expression) &&
-				!is_BlockExpression(node.expression) &&
-				!is_IfBlockExpression(node.expression)) ||
-				false)
+			is_ClosureFunctionExpression(node) &&
+			(false ||
+				// "|| -> T x" -> "|| -> T { x }"
+				(!!node.returnType && !is_BlockExpression(node.expression)) ||
+				// "|| match x {}" -> "|| { match x {} }"
+				(is_ExpressionWithBodyOrCases(node.expression) &&
+					!is_BlockExpression(node.expression) &&
+					!is_IfBlockExpression(node.expression)))
 		) {
 			node.expression = blockify(node.expression);
 		}
@@ -344,7 +350,7 @@ function insert_blocks(parent: Node | undefined, key: string | undefined, node: 
 		const block = rs.mockNode(NodeType.BlockExpression, node.loc.clone(), {
 			label: undefined,
 			body: rs.createLocArray(DelimKind["{}"], node.loc.clone(), [
-				rs.mockNode(NodeType.ExpressionStatement, node.loc.clone(), { semi: true, expression: node }),
+				rs.mockNode(NodeType.ExpressionStatement, node.loc.clone(), { semi: false, expression: node }),
 			]),
 		});
 		transferAttributes(node, block);

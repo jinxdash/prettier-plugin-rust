@@ -61,7 +61,7 @@ import {
 	UnionDeclaration,
 	UnionPattern,
 	WhileBlockExpression,
-	YieldExpression
+	YieldExpression,
 } from "jinx-rust";
 import {
 	DelimChars,
@@ -145,7 +145,7 @@ import {
 	is_UnwrapExpression,
 	is_VariableDeclarationNode,
 	ownStart,
-	start
+	start,
 } from "jinx-rust/utils";
 import { assert, AssertTypesEq, exit, find_last, flat, Identity, iLast, last_of, Map_get, Narrow, spread } from "../utils/common";
 import {
@@ -161,7 +161,7 @@ import {
 	isPreviousLineEmpty,
 	printCommentsSeparately,
 	printDanglingComments,
-	withComments
+	withComments,
 } from "./comments";
 import {
 	hasComplexGenerics,
@@ -170,7 +170,7 @@ import {
 	hasComplexTypeArguments,
 	hasComplexTypeBounds,
 	isShortGenericParameterDeclaration,
-	is_short
+	is_short,
 } from "./complexity";
 import {
 	align,
@@ -196,7 +196,7 @@ import {
 	lineSuffixBoundary,
 	removeLines,
 	softline,
-	willBreak
+	willBreak,
 } from "./external";
 import {
 	f,
@@ -209,7 +209,7 @@ import {
 	is_printing_macro,
 	pathCall,
 	pathCallEach,
-	print
+	print,
 } from "./plugin";
 import { canInlineBlockBody, emptyContent, needsParens, shouldFlatten } from "./styling";
 import { BlockLikeMacroInvocation, CallLikeMacroInvocation, is_CallExpression_or_CallLikeMacroInvocation } from "./transform";

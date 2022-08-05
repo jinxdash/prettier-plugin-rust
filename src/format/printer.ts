@@ -251,7 +251,7 @@ export const printer: { [K in NodeType]: nPrint<Extract<NTMap[K], Node>> } = {
 				" =",
 				"expression"
 			),
-			f`else ${print("else")}`,
+			f` else ${print("else")}`,
 			";",
 		];
 	},

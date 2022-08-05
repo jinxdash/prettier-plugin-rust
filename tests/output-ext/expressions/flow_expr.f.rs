@@ -148,5 +148,9 @@ pub fn main() {
       break;
     }
   }
+  let () = if 0 {
+  } else {
+    return;
+  };
 }
 // source: "../../../ext/jinx-rust/tests/samples/expressions/flow_expr.rs"

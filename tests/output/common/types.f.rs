@@ -57,12 +57,13 @@ const bar = |a: [any]| -> A {
   console.log(varargs);
 };
 
-const foo = |x: string| -> !
+const foo = |x: string| -> ! {
   bar(
     x,
     || {},
     || {}
-  );
+  )
+};
 
 app.get("/", |req, res| -> void {
   res.send("Hello world");
@@ -333,11 +334,12 @@ let listener = DOM.listen(
   introCard,
   "click",
   sigil,
-  |event: JavelinEvent| -> void
+  |event: JavelinEvent| -> void {
     BanzaiLogger.log(config, A {
       ..logData,
       ..DataStore.get(event.getNode(sigil)),
     })
+  }
 );
 
 this.firebase
@@ -381,7 +383,8 @@ crate impl Thing for OtherThing {
   );
 }
 
-const appIDs = createSelector(PubXURLParams.APP_IDS, |rawAppIDs| -> Array<AppID>
-  deserializeList(rawAppIDs)
+const appIDs = createSelector(
+  PubXURLParams.APP_IDS,
+  |rawAppIDs| -> Array<AppID> { deserializeList(rawAppIDs) }
 );
 // source: "../../samples/common/types.rs"

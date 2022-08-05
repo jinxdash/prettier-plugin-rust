@@ -1,16 +1,16 @@
 ---
 name: Formatter issue
 about: Something unexpected happened
-title: ''
-labels: ''
-assignees: ''
-
+title: ""
+labels: ""
+assignees: ""
 ---
 
 # Bug Report
 
 ### 💻 Input
 
+<!-- prettier-ignore -->
 ```rs
 fn main() {
     
@@ -21,6 +21,7 @@ fn main() {
 
 <!-- Bad code output, or error -->
 
+<!-- prettier-ignore -->
 ```rs
 fn main() {
     
@@ -29,6 +30,7 @@ fn main() {
 
 ### ✅ Expected
 
+<!-- prettier-ignore -->
 ```rs
 fn main() {
     

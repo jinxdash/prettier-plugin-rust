@@ -13,7 +13,7 @@ export async function activate(context: ExtensionContext) {
 			async provideDocumentFormattingEdits(document) {
 				const config: Config = {
 					filepath: cmd(document.fileName),
-					...((await resolveConfig(document.fileName, { editorconfig: true })) ?? {}),
+					...((await resolveConfig(document.fileName, { editorconfig: true, useCache: false })) ?? {}),
 				};
 				console.log("", `# Formatting using prettier@${prettier.version}`, {
 					...config,

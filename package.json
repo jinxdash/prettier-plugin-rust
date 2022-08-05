@@ -1,6 +1,6 @@
 {
 	"name": "prettier-plugin-rust",
-	"version": "0.1.2",
+	"version": "0.1.5",
 	"description": "Prettier plugin for Rust",
 	"repository": {
 		"type": "git",
@@ -55,6 +55,18 @@
 		"semi": true,
 		"tabWidth": 4,
 		"useTabs": true,
-		"endOfLine": "lf"
+		"endOfLine": "lf",
+		"overrides": [
+			{
+				"files": [
+					"**/*.md"
+				],
+				"options": {
+					"printWidth": 80,
+					"useTabs": false,
+					"tabWidth": 2
+				}
+			}
+		]
 	}
 }

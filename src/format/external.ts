@@ -1,12 +1,12 @@
 import { Attribute, AttributeOrDocComment, Comment, DocCommentAttribute, LocArray, MemberExpression, Node, SourceFile } from "jinx-rust";
 import { PickProps } from "jinx-rust/utils";
 import type { Doc, ParserOptions, Printer } from "prettier";
-import doc from "prettier/doc";
+import doc from "prettier/doc.js";
 import { AssertTypesEq } from "../utils/common";
 
 export type { Doc, ParserOptions, Plugin, Printer } from "prettier";
 
-declare module "prettier/doc" {
+declare module "prettier/doc.js" {
 	namespace utils {
 		function canBreak(doc: Doc): boolean;
 	}
