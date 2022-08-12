@@ -63,7 +63,7 @@ _Formatting succeeds and fixes 7 syntax errors._
 
 https://prettier.io/docs/en/configuration
 
-```json
+```json5
 // .prettierrc.json
 {
   "useTabs": false,
