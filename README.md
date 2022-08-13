@@ -16,11 +16,15 @@ _The massively popular [Prettier](https://prettier.io/) code formatter, now with
 
 ## Why Prettier?
 
-> What usually happens once people start using Prettier is that they realize how much time and mental energy they actually spend formatting their code. With Prettier editor integration, you can just press the `Format Document` key binding and poof, the code is formatted. This is an eye-opening experience if anything.
+> What usually happens once people start using Prettier is that they realize how much time and mental energy they actually spend formatting their code. No matter how incomplete or broken the code you're working on is, with the Prettier Editor Extension you can always just press the `Format Document` key binding and \*poof\*, the code snaps right into place.
 
-- **Beautiful, uniform and consistent** — Prettier is strongly opinionated, it has zero style options.
-- **Life-changing Editor Integration** — Prettier can format WIP code before it can compile _(e.g. missing annotations)_
-- **Stop wasting time on formalities** — Prettier autocorrects bad syntax _(e.g. missing semicolons, blocks, parentheses...)_
+<br>
+
+- **Beautiful, uniform and consistent** — Prettier is strongly opinionated, with no style options.
+- **There when you need it the most** — Prettier can format code that won't compile _(e.g. missing annotations)_
+- **Speed up the day-to-day** — Prettier auto-fixes common syntax errors _(e.g. missing semicolons, blocks, parentheses)_
+
+<br>
 
 <table align="center">
 <tr> <th>> input</th> <th>> formatted</th> </tr>
@@ -61,10 +65,13 @@ _Formatting succeeds and fixes 7 syntax errors._
 
 </div>
 
+<br>
+
 ## Configuration
 
 https://prettier.io/docs/en/configuration
 
+<!-- prettier-ignore -->
 ```json5
 // .prettierrc.json
 {
@@ -123,6 +130,8 @@ overrides = [
 
 Yes! Prettier Rust formats most nightly features. Support depends on [`jinx-rust`](https://github.com/jinxdash/jinx-rust).
 
+<br>
+
 ## Editor integration
 
 - ### `Recommended` Extension Standalone
@@ -145,6 +154,8 @@ Yes! Prettier Rust formats most nightly features. Support depends on [`jinx-rust
   _To update (manual only!!):_ `npm upgrade --global prettier-plugin-rust prettier`  
   _To check installed version:_ `npm ls -g --depth=0 prettier-plugin-rust prettier`  
   _To check latest version:_ `npm info prettier-plugin-rust version`
+
+<br>
 
 ## Project integration
 
@@ -190,24 +201,27 @@ Yes! Prettier Rust formats most nightly features. Support depends on [`jinx-rust
 
   _No crate yet. Above options are available in the meantime._
 
----
+<br>
 
 ## Q&A
 
 - ### _Why would I use this and not the established `cargo fmt` ?_
 
-  **It mostly comes down to the Editor Integration.** — With Prettier Rust, you have the ability to hit the `Format Document` keybind on incomplete code and everything fits right into place. Again reiterating on what was said in the introduction, but this is _actually_ life-changing. Just try it out, 1-click install the extension, write a few lines and hit the keybind.
+  _It's all about the Editor Integration_ — Having the ability to format your code while you work on it really makes for a great developer experience, and autocompletion for Rust's strict syntax is such a massive time save. Once you've tried the extension there really is no coming back.
 
-   There's only little difference in terms of how code is printed, so adopting Prettier Rust won't drastically change a codebase. Prettier's only downside against Rustfmt is its troublesome integration into the Rust ecosystem. Fortunately it's only a matter of time before it gets resolved.
+  All-in-all the difference in code style is minimal, so adopting Prettier Rust won't drastically change your codebase. The real downside is the harsher integration with the Rust ecosystem, but it'll get better eventually.
 
-  See also:
+  Point by point:
 
-  - Prettier Rust does not have style options.
-  - Prettier Rust produces slightly more readable code (e.g. parenthesis around compound bin ops)
-  - Prettier Rust supports more things by default (nightly features, macros, ...)
-  - Prettier consistently prints code in the same way, whereas rustfmt preserves arbitrary style at places
-  - Prettier is available for many languages (e.g. markdown, html, typescript, java, python, ruby...)
-  - Prettier supports language embeds. It formats rust code blocks in non-rust files (e.g. markdown), and conversely formats supported languages within rust doc comments.
+  - the extension streamlines your work in the editor
+    - it can format code that won't compile _(e.g. code with missing type annotations)_
+    - it autocorrects syntax errors _(e.g. missing semicolons, blocks, parentheses...)_
+  - it is strongly opinionated with no style options, so code is uniform across projects.
+  - it produces more readable code in some cases (e.g. condition chains, compound expressions, patterns)
+  - it supports everything out-of-the-box (e.g. nightly features, macros)
+  - it consistently prints code in the same way, whereas Rustfmt preserves arbitrary style at places
+  - it can be used for other languages (e.g. markdown, html, typescript, java, python, ruby)
+  - it formats language embeds. So rust code blocks in non-rust files (e.g. markdown), and supported languages in rust doc comments. _[NOTE: the latter is not yet implemented]_
 
 - ### _How can Prettier Rust format files that the Rust Compiler cannot parse?_
 

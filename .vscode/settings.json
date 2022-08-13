@@ -1,6 +1,0 @@
-{
-  "files.exclude": {
-    "ext": false,
-    "extension\\prettier-rust-icon.png": true
-  }
-}
