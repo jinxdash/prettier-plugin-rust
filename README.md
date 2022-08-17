@@ -122,7 +122,7 @@ overrides = [
 
 - Curlies `!{}` format like blocks, `![]` and `!()` like comma-separated expressions
 - Formatting inside macro invocations is more conservative, since macros can be token-sensitive
-- Popular/built-in macros with original syntax rules get custom formatting (e.g. `matches!`, `if_chains!`...)
+- Popular/built-in macros with original syntax rules get custom formatting (e.g. `matches!`, `if_chains!`...) _[Not implemented yet]_
 - Macro Declarations are only partially formatted (the transformed part isn't yet, but could be in the future)
 - Macros that can't be formatted are silently ignored
 
