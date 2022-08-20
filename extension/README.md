@@ -10,6 +10,8 @@
 
 _The massively popular [Prettier](https://prettier.io/) code formatter, now with [Rust](https://www.rust-lang.org/) support!_
 
+_This extension is a standalone bundle of Prettier + Prettier Plugin Rust._
+
 </div>
 
 ## Why Prettier?
@@ -120,7 +122,7 @@ overrides = [
 
 - Curlies `!{}` format like blocks, `![]` and `!()` like comma-separated expressions
 - Formatting inside macro invocations is more conservative, since macros can be token-sensitive
-- Popular/built-in macros with original syntax rules get custom formatting (e.g. `matches!`, `if_chains!`...)
+- Popular/built-in macros with original syntax rules get custom formatting (e.g. `matches!`, `if_chains!`...) _[Not implemented yet]_
 - Macro Declarations are only partially formatted (the transformed part isn't yet, but could be in the future)
 - Macros that can't be formatted are silently ignored
 
@@ -196,10 +198,24 @@ Yes! Prettier Rust formats most nightly features. Support depends on [`jinx-rust
   - it can be used for other languages (e.g. markdown, html, typescript, java, python, ruby)
   - it formats language embeds. So rust code blocks in non-rust files (e.g. markdown), and supported languages in rust doc comments. _[NOTE: the latter is not yet implemented]_
 
-- ### _How can Prettier Rust format files that the Rust Compiler cannot parse?_
+- ### _Why not just add those features to rustfmt instead?_
 
-  Prettier Rust is based on `jinx-rust`, a Rust Parser specially built for Rust Tooling. [Learn more about jinx-rust here.](https://github.com/jinxdash/jinx-rust)
+  Unfortunately Rustfmt cannot implement those features by design.
 
-- ### _How does Prettier Rust compare to Prettier Typescript?_
+  Rustfmt parses code with rustc. Rustc is strict and unforgiving as it always assumes code is at its "final version", thus every slight deviation from the accepted syntax crashes the parser. There's also that rustc has many lint-like checks within the parser. The intention is to save work for the compiler down the line, unfortunately it also means that rustc sometimes fails to parse syntactically correct code.
 
-  Prettier Rust is essentially a port of Prettier Typescript. The Rust plugin barely introduces style opinions on its own.
+  Prettier Rust however is based on [jinx-rust](https://github.com/jinxdash/jinx-rust). Jinx-rust is built specifically for Rust tooling. Hence it's designed to tolerate a wide range of syntax errors, supports missing nodes and sometimes even infers user intent (e.g. Javascript's `!==`)
+
+  Jinx-rust has a little *plaidoyer* in its readme arguing for Rust Tooling *not* to use the official rustc parser [here](https://github.com/jinxdash/jinx-rust#why-jinx-rust-and-why-in-typescript).
+
+- ### _When exactly does Prettier Rust change code syntax?_
+
+  The Prettier Rust syntax autocorrection feature is intended to be an adaptation of how Prettier Typescript autocorrects javascript code with missing semicolons.
+
+  You can effectively think of Prettier Rust syntax autocorrection as auto-applying the Rust compiler's suggested syntax fixes automatically (e.g. "semicolon missing here", "parenthesize this" or "add a block around that")
+
+  Otherwise if your codebase compiles, then Prettier Rust is just a formatter like any other. It won't change the syntax of valid rust code. Moreover, it doesn't reorganize imports, split comments or combine attributes.
+
+- ### _This is an "opinionated formatter". But it's brand new! How reliable are those opinions?_
+
+  Rest assured, Prettier Rust actually does not take style decisions on its own. Prettier Rust is essentially a 1:1 adaptation of Prettier Typescript, hence the opinions it implements have been battle tested and agreed-upon by [millions and millions of users](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) already.

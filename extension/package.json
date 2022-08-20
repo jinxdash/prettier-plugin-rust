@@ -3,14 +3,14 @@
 	"name": "prettier-rust",
 	"publisher": "jinxdash",
 	"displayName": "Prettier - Code formatter (Rust)",
-	"description": "Code formatter using prettier and prettier-plugin-rust",
+	"description": "Prettier Rust is a code formatter that autocorrects bad syntax",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/jinxdash/prettier-plugin-rust.git",
 		"directory": "extension"
 	},
 	"author": "jinxdash <jinxdash.github@gmail.com> (https://github.com/jinxdash)",
-	"version": "0.1.5",
+	"version": "0.1.6",
 	"engines": {
 		"vscode": "^1.69.0"
 	},
