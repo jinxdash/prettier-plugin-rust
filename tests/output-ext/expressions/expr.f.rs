@@ -158,7 +158,7 @@ fn main() {
   // std::<_ as _>,
   std::<0>,
   &raw const x,
-  (A::a as fn(&dyn A + 'static) -> B)(&"c"),
+  (A::a as fn(&(dyn A + 'static)) -> B)(&"c"),
   f::<<T as S>::E>(),
   <u64 as From<<T as Iterator>::Item>>::from(),
   <<Q as A<'_>>::B as C<Q::D>>::e(db),

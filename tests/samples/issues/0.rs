@@ -1909,3 +1909,14 @@ const f = static async |source, block, opts| {
   }
 };
 
+
+type Expect_Parenthesized_dyn = Pin<&mut (dyn Future<Output = T> + Send)>;
+
+let mut Expect_Comma_after_first_match = match 0 {
+    RuntimeFlavor::CurrentThread => quote_spanned! {last_stmt_start_span=>
+        #crate_ident::runtime::Builder::new_current_thread()
+    },
+    RuntimeFlavor::Threaded => quote_spanned! {last_stmt_start_span=>
+        #crate_ident::runtime::Builder::new_multi_thread()
+    },
+};

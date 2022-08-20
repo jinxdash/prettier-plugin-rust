@@ -92,7 +92,6 @@ import {
 	is_ExpressionStatement,
 	is_ExpressionTypeCast,
 	is_ExpressionWithBodyOrCases,
-	is_ExpressionWithBodyOrCases_or_BlockLikeMacroInvocation,
 	is_FlowControlExpression,
 	is_FunctionDeclaration,
 	is_FunctionParameterDeclaration,
@@ -295,10 +294,7 @@ export function printBodyOrCases<T extends NodeWithBodyOrCases | BlockLikeMacroI
 		pathCallEach(node as Extract<Node, MatchExpression>, "cases", (mCase) => {
 			p.push({
 				node: mCase,
-				doc:
-					is_MatchExpressionCase(mCase) && !is_ExpressionWithBodyOrCases_or_BlockLikeMacroInvocation(mCase.expression)
-						? [print(), ","]
-						: print(),
+				doc: is_MatchExpressionCase(mCase) && !is_ExpressionWithBodyOrCases(mCase.expression) ? [print(), ","] : print(),
 			});
 		});
 	} else {
