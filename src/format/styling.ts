@@ -86,6 +86,7 @@ import {
 	is_TypeFunctionNode,
 	is_TypeTraitBound,
 	is_UnaryExpression,
+	is_UnaryType,
 	is_UnionPattern,
 	is_WhileBlockExpression,
 	is_YieldExpression,
@@ -288,14 +289,12 @@ export function needsInnerParens(node: Node) {
 	}
 
 	if (is_TypeBoundsStandaloneNode(node)) {
-		if (
+		return (
+			(is_UnaryType(parent) && node.typeBounds.length > 1) ||
 			is_TypeBoundsStandaloneNode(parent) ||
 			is_TypeTraitBound(parent) ||
 			(is_TypeFunctionNode(parent) && parent.returnType === node)
-		) {
-			return true;
-		}
-		return false;
+		);
 	}
 
 	if (is_PatternVariableDeclaration(parent)) {

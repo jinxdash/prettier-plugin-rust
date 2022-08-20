@@ -71,8 +71,8 @@ fn f1<'a, 'b, 'c>(_x: &'a u32, _y: &'b u32, _z: &'c u32) where 'c: 'a + 'b {}
 fn syntax() {
   A::<T = u8, T: Ord, String>();
   A::<T = u8, 'a, T: Ord>();
-  fn y<'a>(y: &mut dyn 'a + Send);
-  let z = y as &mut dyn 'a + Send;
+  fn y<'a>(y: &mut (dyn 'a + Send));
+  let z = y as &mut (dyn 'a + Send);
   let x: &'static str = "A";
   fn A() -> Box<<Self as A>::T>;
   let a = |a, b: _| -> _ { 0 };
@@ -93,7 +93,7 @@ fn syntax() {
   let a: Box<impl A + B + C>;
   let a: Box<impl A + B + C + D>;
   let a: Box<dyn A + B + C + D + E>;
-  let a: &dyn for<'a> Trait<'a> + 'static;
+  let a: &(dyn for<'a> Trait<'a> + 'static);
   let a: &dyn PartialEq<u32> = &7u32;
   let a: Option<!> = None;
   let a = &() as *const () as *const Bottom;
