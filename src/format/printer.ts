@@ -154,10 +154,6 @@ export const printer: { [K in NodeType]: nPrint<Extract<NTMap[K], Node>> } = {
 		} else if (!content.includes("\n")) {
 			content = content.trim();
 			if (hasCurlyBrackets) content = " " + content + " ";
-			content = content
-				.replace(/\s+/g, " ")
-				.replace(/ [,\)\];:](?!:)/g, (str) => str.trim())
-				.replace(/[\(\[] /g, (str) => str.trim());
 		}
 		return [print("callee"), "!", hasCurlyBrackets ? " " : "", delim.left, content, delim.right];
 	},
