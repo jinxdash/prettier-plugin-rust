@@ -2244,4 +2244,9 @@ let mut Expect_Comma_after_first_match = match 0 {
         #crate_ident::runtime::Builder::new_multi_thread()
     },
 };
+
+ExpectNoSpreadComma { ..a };
+ExpectNoSpreadComma { ..a };
+ExpectNoSpreadComma { a, b: b, ..c };
+ExpectNoSpreadComma { a, b: b, ..c };
 // source: "../../samples/issues/0.rs"

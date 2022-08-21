@@ -337,7 +337,7 @@ let listener = DOM.listen(
   |event: JavelinEvent| -> void {
     BanzaiLogger.log(config, A {
       ..logData,
-      ..DataStore.get(event.getNode(sigil)),
+      ..DataStore.get(event.getNode(sigil))
     })
   }
 );
