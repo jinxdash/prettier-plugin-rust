@@ -1,0 +1,24 @@
+name: ✨ Formatting
+description: Issues for incorrect or unreadable code
+body:
+  - type: textarea
+    id: code
+    attributes:
+      label: Input code
+      placeholder: Paste the input code here.
+      render: rust
+    validations:
+      required: true
+  - type: textarea
+    id: output
+    attributes:
+      label: Output code
+      placeholder: Paste the formatted code here.
+      render: rust
+    validations:
+      required: true
+  - type: textarea
+    id: extra
+    attributes:
+      label: Additional context
+      placeholder: Add other relevant context about the problem here.

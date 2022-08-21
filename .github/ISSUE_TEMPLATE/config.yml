@@ -1,1 +1,6 @@
+contact_links:
+  - name: Github discussion board
+    url: https://github.com/jinxdash/prettier-plugin-rust/discussions
+    about: Questions and answers
+    
 blank_issues_enabled: true
