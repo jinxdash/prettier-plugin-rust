@@ -1379,7 +1379,7 @@ fn main() {
   let TestOutcome {
     completed: ok,
     errors: err,
-    ..,
+    ..
   } = forest.process_obligations(
     &mut C(
       |obligation| {
@@ -1811,7 +1811,7 @@ pub fn peel_blocks<'a>(mut expr: &'a Expr<'a>) -> &'a Expr<'a> {
         stmts: [],
         expr: Some(inner),
         rules: BlockCheckMode::DefaultBlock,
-        ..,
+        ..
       },
       _,
     ) = expr.kind
@@ -2245,8 +2245,39 @@ let mut Expect_Comma_after_first_match = match 0 {
     },
 };
 
-ExpectNoSpreadComma { ..a };
-ExpectNoSpreadComma { ..a };
-ExpectNoSpreadComma { a, b: b, ..c };
-ExpectNoSpreadComma { a, b: b, ..c };
+ExpectNoSpreadComma {
+  ..a //
+};
+ExpectNoSpreadComma {
+  ..a //
+};
+ExpectNoSpreadComma {
+  a,
+  b: b,
+  ..c //
+};
+ExpectNoSpreadComma {
+  a,
+  b: b,
+  ..c //
+};
+ExpectNoSpreadComma {
+  a, //
+  ..
+};
+ExpectNoSpreadComma {
+  .. //
+};
+
+let notify::event::Event {
+  kind: notify::event::EventKind::Modify(_),
+  paths,
+  ..
+} = event;
+
+let notify::event::Event {
+  kind: notify::event::EventKind::Modify(_),
+  paths,
+  ..
+} = event;
 // source: "../../samples/issues/0.rs"

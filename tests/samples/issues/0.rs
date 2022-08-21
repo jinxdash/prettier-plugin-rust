@@ -1921,7 +1921,28 @@ let mut Expect_Comma_after_first_match = match 0 {
     },
 };
 
-ExpectNoSpreadComma { ..a };
-ExpectNoSpreadComma { ..a, };
-ExpectNoSpreadComma { a, b: b, ..c };
-ExpectNoSpreadComma { a, ..c, b: b };
+ExpectNoSpreadComma { ..a//
+};
+ExpectNoSpreadComma { ..a,//
+};
+ExpectNoSpreadComma { a, b: b, ..c//
+};
+ExpectNoSpreadComma { a, ..c,//
+b: b
+};
+ExpectNoSpreadComma { .., a//
+};
+ExpectNoSpreadComma { ..//
+};
+
+let notify::event::Event {
+    kind: notify::event::EventKind::Modify(_),
+    paths,
+    ..
+} = event;
+
+let notify::event::Event {
+    ..,
+    kind: notify::event::EventKind::Modify(_),
+    paths,
+} = event;

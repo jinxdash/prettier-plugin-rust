@@ -24,6 +24,7 @@ import {
 	is_ReassignmentNode,
 	is_StatementNode,
 	is_StructLiteralProperty,
+	is_StructLiteralPropertySpread,
 	nisAnyOf,
 	ownStart,
 	start,
@@ -424,6 +425,7 @@ function handleCommon(ctx: CommentContext): boolean {
 		handleDanglingComments,
 		handleFunctionComments,
 		handleMacroRuleComments,
+		handleStructLiteralComments,
 		handleVariableDeclaratorComments,
 		handleIfBlockExpressionComments,
 		handleMemberExpressionComments,
@@ -499,6 +501,13 @@ export function handleEndOfLineComment(ctx: CommentContext) {
 export function handleRemainingComment(ctx: CommentContext) {
 	return handleCommon(ctx);
 }
+
+function handleStructLiteralComments({ precedingNode, enclosingNode, followingNode, comment, ast }: CommentContext) {
+	if (enclosingNode && is_StructLiteralPropertySpread(enclosingNode) && followingNode === enclosingNode.expression) {
+		addLeadingComment(enclosingNode, comment);
+	}
+}
+
 function handleVariableDeclaratorComments({ precedingNode, enclosingNode, followingNode, comment, ast }: CommentContext) {
 	if (
 		enclosingNode &&

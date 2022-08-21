@@ -16,7 +16,8 @@ import {
 	rs,
 	Snippet,
 	StatementNode,
-	StructLiteralPropertySpread,
+	StructLiteral,
+	StructPattern,
 	TK,
 	TypeBound,
 	TypeBoundsStandaloneNode,
@@ -56,7 +57,6 @@ import {
 	is_PunctuationToken,
 	is_ReassignmentNode,
 	is_Snippet,
-	is_StructLiteralPropertySpread,
 	is_TypeBoundsStandaloneNode,
 	is_TypeDynBounds,
 	is_TypeImplBounds,
@@ -81,6 +81,7 @@ import {
 	try_eval,
 } from "../utils/common";
 import { isPrettierIgnoreAttribute, setPrettierIgnoreTarget } from "./comments";
+import { is_StructSpread } from "./core";
 import { CustomOptions } from "./external";
 import { getOptions } from "./plugin";
 
@@ -294,27 +295,36 @@ const transform: { [K in NodeType]?: (node: NTMap[K]) => void } = {
 			getOptions().actuallyMethodNodes.add(node.callee as MemberExpression);
 		}
 	},
+
 	[NodeType.AutoTraitDeclaration](node) {
 		mockBodyNoBody(node);
 	},
 	[NodeType.NegativeImplDeclaration](node) {
 		mockBodyNoBody(node);
 	},
+
 	[NodeType.StructLiteral](node) {
-		const props = node.properties;
-		if (props.some((p, i, a) => is_StructLiteralPropertySpread(p) && !iLast(i, a))) {
-			const spreads: StructLiteralPropertySpread[] = [];
-			for (let i = 0; i < props.length; i++) {
-				const prop = props[i];
-				if (is_StructLiteralPropertySpread(prop)) {
-					Array_splice(props, prop, i--);
-					spreads.push(prop);
-				}
-			}
-			props.push(...spreads);
-		}
+		moveSpreadsToEnd(node);
+	},
+	[NodeType.StructPattern](node) {
+		moveSpreadsToEnd(node);
 	},
 };
+
+function moveSpreadsToEnd(node: StructLiteral | StructPattern) {
+	const props = node.properties;
+	if (props.some((p, i, a) => is_StructSpread(p) && !iLast(i, a))) {
+		const spreads: any[] = [];
+		for (let i = 0; i < props.length; i++) {
+			const prop = props[i];
+			if (is_StructSpread(prop)) {
+				Array_splice(props, prop, i--);
+				spreads.push(prop);
+			}
+		}
+		props.push(...spreads);
+	}
+}
 
 function mockBodyNoBody(node: NodeWithBodyNoBody) {
 	// @ts-expect-error

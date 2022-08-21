@@ -294,5 +294,10 @@ fn foo() {
             )
         });
 
-    let y = expr /* comment */.kaas()?
+    let y = expr /* comment */.kaas()?;
+
+    (Foo {
+        ..// comment
+        a
+    } = a);
 }

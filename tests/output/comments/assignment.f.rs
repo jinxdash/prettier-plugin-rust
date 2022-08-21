@@ -302,5 +302,10 @@ fn foo() {
 
   let y = expr /* comment */
     .kaas()?;
+
+  (Foo {
+    // comment
+    ..a
+  } = a);
 }
 // source: "../../samples/comments/assignment.rs"
