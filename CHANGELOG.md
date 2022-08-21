@@ -1,24 +1,28 @@
-# Prettier Rust (prettier-plugin-rust) changelog
+# Prettier Rust Changelog
 
 ## Unreleased
 
+## 0.1.8
+
+- feat(extension): display message when formatting fails due to non-parser errors.
+- feat: move `..spread`, `..` to the end of patterns and reassignments ([#7](https://github.com/jinxdash/prettier-plugin-rust/pull/7))
+- fix: remove comma after `..` in patterns and reassignments ([#7](https://github.com/jinxdash/prettier-plugin-rust/pull/7))
+- fix: support malformed `macro_rules!` ([jinx-rust@0.1.6](/jinxdash/jinx-rust/pull/2))
+- fix: unprinted comment errors in failed macros ([#8](https://github.com/jinxdash/prettier-plugin-rust/pull/8))
+
 ## 0.1.7
 
-- (fix) Removes forbidden trailing comma after `StructLiteralPropertySpread` ([#6](https://github.com/jinxdash/prettier-plugin-rust/pull/6))
-- (fix) Moves `StructLiteralPropertySpread` to the end of struct literals ([#6](https://github.com/jinxdash/prettier-plugin-rust/pull/6))
+- feat: move `..spread` to the end of struct literals ([#6](https://github.com/jinxdash/prettier-plugin-rust/pull/6))
+- fix: remove comma after `..spread` in struct literals ([#6](https://github.com/jinxdash/prettier-plugin-rust/pull/6))
 
 ## 0.1.6
 
-- (fix) Adds required parenthesis around >1 length standalone type bounds (dyn, impl) nested in unary types. ([#4](https://github.com/jinxdash/prettier-plugin-rust/pull/4))
-- (fix) Adds required comma for `MatchExpression.expression` when expression is a block-like Macro invocation. ([#4](https://github.com/jinxdash/prettier-plugin-rust/pull/4))
+- fix: parenthesize >1 length `dyn`/`impl` types nested in unary types. ([#4](https://github.com/jinxdash/prettier-plugin-rust/pull/4))
+- fix: remove comma after `match` cases with block-like macro expressions. ([#4](https://github.com/jinxdash/prettier-plugin-rust/pull/4))
 
 ## 0.1.5
 
-- (docs) Clarified README ([#1](https://github.com/jinxdash/prettier-plugin-rust/issues/1))
-- (fix) Fixed ESM imports ([#2](https://github.com/jinxdash/prettier-plugin-rust/issues/2))
-- (fix) Fixed block wrapping of closure expressions when returnType is defined
-- (fix) Fixed let_else nightly feature formatting
-
-### Extension
-
-- Disabled config caching
+- feat: wrap non-block closure expressions with a block when a `->` ReturnType is defined
+- fix: add extension to filepath in ESM imports ([#2](https://github.com/jinxdash/prettier-plugin-rust/issues/2))
+- fix: add missing whitespace in `let_else` feature
+- fix(extension): disable config caching

@@ -120,13 +120,13 @@ const HARDCODED_MACRO_DELIMS = new Map<string, MacroInvocation["segments"]["dk"]
 each(
 	{
 		[DelimKind["{}"]]: [
-			//
+			// std
 			"thread_local",
-			//
+			// crates
 			"cfg_if",
 		],
 		[DelimKind["()"]]: [
-			//
+			// std
 			"assert_eq",
 			"assert_ne",
 			"assert",
@@ -151,10 +151,12 @@ each(
 			"unreachable",
 			"write",
 			"writeln",
+			// crates
 		],
 		[DelimKind["[]"]]: [
-			//
+			// std
 			"vec",
+			// crates
 		],
 	},
 	(names, tk) =>
@@ -164,9 +166,10 @@ each(
 );
 
 const IGNORED_MACROS = new Set([
-	//
-	"quote",
+	// std
+	// crates
 	"cfg_if",
+	"quote",
 ]);
 
 let DANGLING_ATTRIBUTES: CustomOptions["danglingAttributes"] = undefined!;

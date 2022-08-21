@@ -66,6 +66,7 @@ function tryFormat(doc: TextDocument, config: prettier.Config) {
 			}
 		} else {
 			console.log(e);
+			window.showErrorMessage((e as any).message);
 		}
 		return doc.getText();
 	}

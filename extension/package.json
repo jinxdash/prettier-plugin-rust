@@ -10,7 +10,7 @@
 		"directory": "extension"
 	},
 	"author": "jinxdash <jinxdash.github@gmail.com> (https://github.com/jinxdash)",
-	"version": "0.1.7",
+	"version": "0.1.8",
 	"engines": {
 		"vscode": "^1.69.0"
 	},
@@ -50,7 +50,7 @@
 	},
 	"dependencies": {
 		"prettier": "^2.7.1",
-		"jinx-rust": "0.1.5",
+		"jinx-rust": "0.1.6",
 		"prettier-plugin-rust": "file:../"
 	},
 	"main": "index.js",

@@ -1,6 +1,6 @@
 {
 	"name": "prettier-plugin-rust",
-	"version": "0.1.7",
+	"version": "0.1.8",
 	"description": "Prettier plugin for Rust",
 	"repository": {
 		"type": "git",
@@ -47,7 +47,7 @@
 		"typescript": "^4.7.4"
 	},
 	"dependencies": {
-		"jinx-rust": "0.1.5",
+		"jinx-rust": "0.1.6",
 		"prettier": "^2.7.1"
 	},
 	"prettier": {
