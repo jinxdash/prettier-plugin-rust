@@ -96,7 +96,7 @@ const A {
 
 const A {
   // prettier-ignore
-  ..,
+  ..
 } = foo;
 
 const A {

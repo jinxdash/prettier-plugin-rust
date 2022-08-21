@@ -70,11 +70,11 @@ fn main() {
             StmtKind::Local(Local {
               pat: Pat {
                 kind: PatKind::Wild,
-                ..,
+                ..
               },
-              ..,
+              ..
             }),
-            ..,
+            ..
           }),
           _,
         ))

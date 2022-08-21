@@ -47,9 +47,12 @@ import {
 	PatternNode,
 	PunctuationToken,
 	RangeNode,
+	RestPattern,
 	ReturnExpression,
 	StructDeclaration,
 	StructLiteral,
+	StructLiteralPropertySpread,
+	StructLiteralRestUnassigned,
 	TK,
 	TraitAliasDeclaration,
 	TraitDeclaration,
@@ -241,6 +244,18 @@ export function is_BinaryishExpression(node: Node): node is OrExpression | AndEx
 		case NodeType.AndExpression:
 		case NodeType.OperationExpression:
 		case NodeType.ComparisonExpression:
+			return true;
+		default:
+			return false;
+	}
+}
+
+export type StructSpread = StructLiteralPropertySpread | StructLiteralRestUnassigned | RestPattern;
+export function is_StructSpread(node: Node): node is StructSpread {
+	switch (node.nodeType) {
+		case NodeType.StructLiteralPropertySpread:
+		case NodeType.StructLiteralRestUnassigned:
+		case NodeType.RestPattern:
 			return true;
 		default:
 			return false;
@@ -2279,7 +2294,7 @@ export function printObject<T extends ObjectNode>(print: print<T>, node: T): Doc
 			...print.join(
 				"properties", //
 				(node) => (isNextLineEmpty(node) ? [",", hardline, hardline] : [",", line]),
-				(node) => (is_StructLiteralPropertySpread(node) ? "" : ifBreak(","))
+				(node) => (is_StructSpread(node) ? "" : ifBreak(","))
 			),
 		]),
 		line,
