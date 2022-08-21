@@ -2279,7 +2279,7 @@ export function printObject<T extends ObjectNode>(print: print<T>, node: T): Doc
 			...print.join(
 				"properties", //
 				(node) => (isNextLineEmpty(node) ? [",", hardline, hardline] : [",", line]),
-				ifBreak(",")
+				(node) => (is_StructLiteralPropertySpread(node) ? "" : ifBreak(","))
 			),
 		]),
 		line,

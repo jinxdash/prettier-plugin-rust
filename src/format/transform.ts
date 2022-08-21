@@ -16,6 +16,7 @@ import {
 	rs,
 	Snippet,
 	StatementNode,
+	StructLiteralPropertySpread,
 	TK,
 	TypeBound,
 	TypeBoundsStandaloneNode,
@@ -55,6 +56,7 @@ import {
 	is_PunctuationToken,
 	is_ReassignmentNode,
 	is_Snippet,
+	is_StructLiteralPropertySpread,
 	is_TypeBoundsStandaloneNode,
 	is_TypeDynBounds,
 	is_TypeImplBounds,
@@ -65,7 +67,19 @@ import {
 	transferAttributes,
 	unsafe_set_nodeType,
 } from "jinx-rust/utils";
-import { Array_replace, Array_splice, assert, binarySearchIn, each, exit, last_of, Map_get, spliceAll, try_eval } from "../utils/common";
+import {
+	Array_replace,
+	Array_splice,
+	assert,
+	binarySearchIn,
+	each,
+	exit,
+	iLast,
+	last_of,
+	Map_get,
+	spliceAll,
+	try_eval,
+} from "../utils/common";
 import { isPrettierIgnoreAttribute, setPrettierIgnoreTarget } from "./comments";
 import { CustomOptions } from "./external";
 import { getOptions } from "./plugin";
@@ -285,6 +299,20 @@ const transform: { [K in NodeType]?: (node: NTMap[K]) => void } = {
 	},
 	[NodeType.NegativeImplDeclaration](node) {
 		mockBodyNoBody(node);
+	},
+	[NodeType.StructLiteral](node) {
+		const props = node.properties;
+		if (props.some((p, i, a) => is_StructLiteralPropertySpread(p) && !iLast(i, a))) {
+			const spreads: StructLiteralPropertySpread[] = [];
+			for (let i = 0; i < props.length; i++) {
+				const prop = props[i];
+				if (is_StructLiteralPropertySpread(prop)) {
+					Array_splice(props, prop, i--);
+					spreads.push(prop);
+				}
+			}
+			props.push(...spreads);
+		}
 	},
 };
 

@@ -176,7 +176,7 @@ const formatData = pipe(
   zip,
   map(|[ref a, data]| A {
     nodeId: a.nodeId.toString(),
-    ..attributeFromDataValue(a.attributeId, data),
+    ..attributeFromDataValue(a.attributeId, data)
   }),
   groupBy(prop("nodeId")),
   map(mergeAll),
@@ -184,8 +184,8 @@ const formatData = pipe(
 );
 
 const setProp = |y| A {
-  ..y,
   a: "very, very, very long very, very long text",
+  ..y
 };
 
 const log = |y| { console.log("very, very, very long very, very long text") };
