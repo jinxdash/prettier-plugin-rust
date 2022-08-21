@@ -15,6 +15,14 @@ f /* comment */!(/* comment */);
 f /* comment */! {/* comment */}
 f /* comment */![/* comment */];
 
+f!([/* comment */]);
+f!({/* comment */});
+f!((/* comment */));
+
+f!(~[/* comment */]);
+f!(~{/* comment */});
+f!(~(/* comment */));
+
 [/* comment */];
 (/* comment */);
 A /* comment */ {/* comment */};

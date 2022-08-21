@@ -218,14 +218,12 @@ function genericPrint() {
 		printed = withComments(
 			node,
 			printed,
-			hasPrettierIgnore(node)
+			hasPrettierIgnore(node) || ((is_Attribute(node) || is_MacroInvocation(node)) && !isTransformed(node))
 				? escapeComments(0, (comment) => node.loc.ownContains(comment))
-				: (is_Attribute(node) || is_MacroInvocation(node)) && !isTransformed(node)
-				? escapeComments(0, (comment) => node.loc.ownContains(comment) && !isDangling(comment))
-				: is_UnionPattern(getParentNode() ?? ({ nodeType: 0 } as any))
-				? new Set(getComments(node, 0, (comment) => !isDangling(comment)))
 				: is_MacroRule(node)
 				? escapeComments(0, (comment) => node.transform.loc.contains(comment))
+				: is_UnionPattern(getParentNode() ?? ({ nodeType: 0 } as any))
+				? new Set(getComments(node, 0, (comment) => !isDangling(comment)))
 				: undefined
 		);
 
@@ -244,7 +242,8 @@ function genericPrint() {
 		);
 	}
 }
-function canAttachComment(n: Node) {
+
+export function canAttachComment(n: Node) {
 	return !is_Comment(n) && !isNoopExpressionStatement(n) && !is_MissingNode(n) && !is_PunctuationToken(n);
 }
 

@@ -53,6 +53,7 @@ import {
 	is_Node,
 	is_NodeWithBodyNoBody,
 	is_NodeWithBodyOrCases,
+	is_PathNode,
 	is_Program,
 	is_PunctuationToken,
 	is_ReassignmentNode,
@@ -121,6 +122,8 @@ each(
 		[DelimKind["{}"]]: [
 			//
 			"thread_local",
+			//
+			"cfg_if",
 		],
 		[DelimKind["()"]]: [
 			//
@@ -163,6 +166,7 @@ each(
 const IGNORED_MACROS = new Set([
 	//
 	"quote",
+	"cfg_if",
 ]);
 
 let DANGLING_ATTRIBUTES: CustomOptions["danglingAttributes"] = undefined!;
@@ -244,6 +248,10 @@ const transform: { [K in NodeType]?: (node: NTMap[K]) => void } = {
 			//
 		}
 
+		if (name === "cfg_if") {
+			//
+		}
+
 		if (tk === DelimKind["{}"]) {
 			transformBlockLike(); /* || (includesTK(node, TK[","]) && transformCallLike()); */
 		} else {
@@ -281,7 +289,7 @@ const transform: { [K in NodeType]?: (node: NTMap[K]) => void } = {
 			);
 		}
 		function getIdentifierName(node: any) {
-			return is_Identifier(node) ? node.name : "";
+			return is_Identifier(node) ? node.name : is_PathNode(node) ? node.segment.name : "";
 		}
 	},
 	[NodeType.CallExpression](node) {

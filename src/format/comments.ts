@@ -1,4 +1,4 @@
-import { CommentOrDocComment, Node, NodeType, NodeWithBodyOrCases } from "jinx-rust";
+import { CommentOrDocComment, LocArray, Node, NodeType, NodeWithBodyOrCases } from "jinx-rust";
 import {
 	end,
 	getBodyOrCases,
@@ -19,6 +19,7 @@ import {
 	is_IfBlockExpression,
 	is_LineCommentKind,
 	is_LineCommentNode,
+	is_LocArray,
 	is_MacroRule,
 	is_NodeWithBodyOrCases,
 	is_ReassignmentNode,
@@ -48,7 +49,7 @@ import {
 	NodeWithComments,
 	PrettierCommentInfo,
 } from "./external";
-import { assertPathAtNode, getAllComments, getContext, getNode, getOptions, pathCallEach } from "./plugin";
+import { assertPathAtNode, canAttachComment, getAllComments, getContext, getNode, getOptions, pathCallEach } from "./plugin";
 import { shouldPrintOuterAttributesAbove } from "./styling";
 import { is_CallExpression_or_CallLikeMacroInvocation } from "./transform";
 
@@ -739,9 +740,12 @@ function handleMemberExpressionComments({ comment, precedingNode, enclosingNode,
 function handleDanglingComments({ comment, precedingNode, enclosingNode, followingNode }: CommentContext) {
 	if (enclosingNode) {
 		for (var key in DCM) {
-			if (key in enclosingNode && enclosingNode[key]?.length === 0 && enclosingNode[key].loc.contains(comment)) {
-				addDanglingComment(enclosingNode, comment, key as DCM);
-				return;
+			if (key in enclosingNode) {
+				var arr: LocArray = enclosingNode[key];
+				if (is_LocArray(arr) && (arr.length === 0 || arr.every((node) => !canAttachComment(node))) && arr.loc.contains(comment)) {
+					addDanglingComment(enclosingNode, comment, key as DCM);
+					return;
+				}
 			}
 		}
 	}
