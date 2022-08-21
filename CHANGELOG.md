@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+## 0.1.7
+
+- (fix) Removes forbidden trailing comma after `StructLiteralPropertySpread` ([#6](https://github.com/jinxdash/prettier-plugin-rust/pull/6))
+- (fix) Moves `StructLiteralPropertySpread` to the end of struct literals ([#6](https://github.com/jinxdash/prettier-plugin-rust/pull/6))
+
 ## 0.1.6
 
 - (fix) Adds required parenthesis around >1 length standalone type bounds (dyn, impl) nested in unary types. ([#4](https://github.com/jinxdash/prettier-plugin-rust/pull/4))
