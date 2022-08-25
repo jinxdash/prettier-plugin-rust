@@ -197,6 +197,15 @@ Yes! Prettier Rust formats most nightly features. Support depends on [`jinx-rust
     npx prettier --write **/*.rs
     ```
 
+  - You can also use the plugin programmatically:
+
+    ```ts
+    import prettier from "prettier";
+    import * as rustPlugin from "prettier-plugin-rust";
+
+    prettier.format(code, { plugins: [rustPlugin] });
+    ```
+
 - ### Rust crate
 
   _No crate yet. Above options are available in the meantime._
@@ -231,7 +240,7 @@ Yes! Prettier Rust formats most nightly features. Support depends on [`jinx-rust
 
   Prettier Rust however is based on [jinx-rust](https://github.com/jinxdash/jinx-rust). Jinx-rust is built specifically for Rust tooling. Hence it's designed to tolerate a wide range of syntax errors, supports missing nodes and sometimes even infers user intent (e.g. Javascript's `!==`)
 
-  Jinx-rust has a little *plaidoyer* in its readme arguing for Rust Tooling *not* to use the official rustc parser [here](https://github.com/jinxdash/jinx-rust#why-jinx-rust-and-why-in-typescript).
+  Jinx-rust has a little _plaidoyer_ in its readme arguing for Rust Tooling _not_ to use the official rustc parser [here](https://github.com/jinxdash/jinx-rust#why-jinx-rust-and-why-in-typescript).
 
 - ### _When exactly does Prettier Rust change code syntax?_
 
