@@ -286,11 +286,10 @@ export function printCommentsInsideEmptyArray(path: AstPath<Node>) {
 export function printNumber(rawNumber: string) {
 	return rawNumber
 		.toLowerCase()
-		.replace(/^([+-]?[\d.]+e)(?:\+|(-))?0*(\d)/, "$1$2$3")
-		.replace(/^([+-]?[\d.]+)e[+-]?0+$/, "$1")
-		.replace(/^([+-])?\./, "$10.")
-		.replace(/(\.\d+?)0+(?=e|$)/, "$1")
-		.replace(/\.(?=e|$)/, "");
+		.replace(/^([\d.]+e)(?:\+|(-))?0*(\d)/, "$1$2$3")
+		.replace(/^([\d.]+)e[+-]?0+$/, "$1")
+		.replace(/\.(\d+?)0+(?=e|$)/, ".$1")
+		.replace(/\.(?=e|$)/, ".0");
 }
 
 export function printOnOwnLine(node: Node, printed: Doc) {
