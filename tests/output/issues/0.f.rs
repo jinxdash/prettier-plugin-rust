@@ -1096,16 +1096,16 @@ fn main() {
 
 fn main() {
   let dv =
-    (2 * m * l * dtheta * dtheta * theta.sin() +
-      3 * m * g * theta.sin() * theta.cos() +
-      4 * u -
-      4 * b * v) /
-    (4 * (M + m) - 3 * m * theta.cos().powi(2));
+    (2.0 * m * l * dtheta * dtheta * theta.sin() +
+      3.0 * m * g * theta.sin() * theta.cos() +
+      4.0 * u -
+      4.0 * b * v) /
+    (4.0 * (M + m) - 3.0 * m * theta.cos().powi(2));
   let ddtheta =
-    (-3 * m * l * dtheta * dtheta * theta.sin() * theta.cos() -
-      6 * (M + m) * g * theta.sin() -
-      6 * (u - b * v) * theta.cos()) /
-    (4 * l * (m + M) - 3 * m * l * theta.cos().powi(2));
+    (-3.0 * m * l * dtheta * dtheta * theta.sin() * theta.cos() -
+      6.0 * (M + m) * g * theta.sin() -
+      6.0 * (u - b * v) * theta.cos()) /
+    (4.0 * l * (m + M) - 3.0 * m * l * theta.cos().powi(2));
   let V: Array2<_> =
     (((&lq + &vi).mapv(f64::exp) - &q) * mi_minus_mi_t.mapv(f64::cos) -
       ((&lq - &vi).mapv(f64::exp) - &q) * mi_plus_mi_t.mapv(f64::cos)) *
@@ -1160,17 +1160,17 @@ fn main() {
       (
         &iR.t() *
         test_covariance *
-        (-2 * &inv_sq_len_scales_i - 2 * &inv_sq_len_scales_i)
+        (-2.0 * &inv_sq_len_scales_i - 2.0 * &inv_sq_len_scales_i)
       ).sum_axis(Axis(0));
   }
   {
     let dSds: Array2<_> =
       r2 *
         (
-          2 * i2SpW.dot(&m_minus_z.as_column()).dot(&m_minus_z.as_row()) -
+          2.0 * i2SpW.dot(&m_minus_z.as_column()).dot(&m_minus_z.as_row()) -
           Array2::<f64>::eye(D)
         ).dot(&i2SpW) -
-      2 * L * &dLds;
+      2.0 * L * &dLds;
   }
   let f = future::poll_fn(move || {
     match tokio_threadpool::blocking(|| f.poll()).unwrap() {
