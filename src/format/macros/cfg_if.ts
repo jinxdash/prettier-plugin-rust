@@ -1,5 +1,4 @@
 import {
-	BlockLike,
 	DelimGroup,
 	DelimKind,
 	IfBlockExpression,
@@ -14,7 +13,7 @@ import {
 	TK,
 } from "jinx-rust";
 import { insertNodes, start, transferAttributes } from "jinx-rust/utils";
-import { assert, iLast, spliceAll } from "../../utils/common";
+import { assert, iLast } from "../../utils/common";
 import { isGroup, isIdent, isToken } from "./utils";
 
 export function transform_macro_cfg_if(segments: MacroInvocation["segments"]) {
