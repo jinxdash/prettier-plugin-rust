@@ -1,4 +1,4 @@
-import { AttributeOrComment, IfBlockExpression, Node, Program, rs } from "jinx-rust";
+import { AttributeOrComment, IfBlockExpression, LocArray, Node, Program, rs } from "jinx-rust";
 import {
 	ArrayProps,
 	BoolProps,
@@ -21,7 +21,7 @@ import {
 	NodeProps,
 	start,
 } from "jinx-rust/utils";
-import { assert, color, each, exit, iLast, is_array, map_tagged_template, print_string } from "../utils/common";
+import { assert, color, each, exit, iLast, is_array, map_tagged_template, Narrow, print_string } from "../utils/common";
 import {
 	CF,
 	escapeComments,
@@ -247,6 +247,7 @@ export function canAttachComment(n: Node) {
 	return !is_Comment(n) && !isNoopExpressionStatement(n) && !is_MissingNode(n) && !is_PunctuationToken(n);
 }
 
+
 export const plugin: Plugin<Node> = {
 	languages: [
 		{
@@ -294,9 +295,9 @@ export const plugin: Plugin<Node> = {
 	printers: {
 		"jinx-rust": {
 			preprocess: (node: Program) => node.loc.src,
-			// @ts-expect-error
 			print(path, options, print, args) {
 				if (path.stack.length === 1) {
+					__DEV__: Narrow<CustomOptions>(options);
 					ctx = { path, options, print, args };
 					try {
 						const printed = genericPrint();
@@ -349,13 +350,12 @@ function devEndCheck(printed: Doc) {
 			if (!first) (first = true), console.log(color.red(`Unprinted comments:`));
 			const len = 40;
 			const msg =
-				(color.magenta(
+				color.magenta(
 					(comment.marker ? `Dangling "${comment.marker}" ` : "") +
 						(is_Attribute(comment) ? "Attribute " : is_DocCommentAttribute(comment) ? "DocCommentAttribute" : "Comment") +
 						` ${index}/${comments.length}` +
 						color.yellow(` ${print_string(comment.loc.sliceText(0, len))}${comment.loc.len() > len ? " ..." : ""}`)
-				),
-				color.grey(`\n    at ${comment.loc.url()}`));
+				) + color.grey(`\n    at ${comment.loc.url()}`);
 			if (globalThis.TESTS_FORMAT_DEV) exit(msg);
 			else console.log(msg);
 			setDidPrintComment(comment);

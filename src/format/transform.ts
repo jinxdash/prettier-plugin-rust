@@ -31,6 +31,7 @@ import {
 	end,
 	getActualNodeChildren,
 	getBodyOrCases,
+	getMacroName,
 	getNodeChildren,
 	hasAttributes,
 	hasMethod,
@@ -84,6 +85,7 @@ import {
 import { isPrettierIgnoreAttribute, setPrettierIgnoreTarget } from "./comments";
 import { is_StructSpread } from "./core";
 import { CustomOptions } from "./external";
+import { transform_macro_cfg_if } from "./macros/cfg_if";
 import { getOptions } from "./plugin";
 
 export interface ExpressionLikeAttribute extends Attribute {
@@ -115,6 +117,12 @@ export function is_BlockLikeMacroInvocation(node: Node): node is BlockLikeMacroI
 export function is_CallExpression_or_CallLikeMacroInvocation(node: any): node is CallExpression | CallLikeMacroInvocation {
 	return is_CallExpression(node) || is_CallLikeMacroInvocation(node);
 }
+
+const IGNORED_MACROS = new Set([
+	// std
+	// crates
+	"quote",
+]);
 
 const HARDCODED_MACRO_DELIMS = new Map<string, MacroInvocation["segments"]["dk"]>();
 each(
@@ -165,25 +173,18 @@ each(
 		})
 );
 
-const IGNORED_MACROS = new Set([
-	// std
-	// crates
-	"cfg_if",
-	"quote",
-]);
-
-let DANGLING_ATTRIBUTES: CustomOptions["danglingAttributes"] = undefined!;
-let COMMENTS: CustomOptions["comments"] = undefined!;
+let _COMMENTS: CustomOptions["comments"] = undefined!;
+let _DANGLING_ATTRIBUTES: CustomOptions["danglingAttributes"] = undefined!;
 
 export function transform_ast(options: CustomOptions) {
 	try {
-		COMMENTS = options.comments;
-		DANGLING_ATTRIBUTES = options.danglingAttributes;
+		_COMMENTS = options.comments;
+		_DANGLING_ATTRIBUTES = options.danglingAttributes;
 		transformNode(options.rsParsedFile);
 	} finally {
 		_depth = 0;
-		COMMENTS = undefined!;
-		DANGLING_ATTRIBUTES = undefined!;
+		_COMMENTS = undefined!;
+		_DANGLING_ATTRIBUTES = undefined!;
 	}
 }
 
@@ -211,12 +212,6 @@ export function isTransformed(node: Node) {
 }
 
 const transform: { [K in NodeType]?: (node: NTMap[K]) => void } = {
-	// [NodeType.Snippet](node) {
-	// 	registerCommentsAndDanglingAttributes(node);
-	// },
-	// [NodeType.Program](node) {
-	// 	registerCommentsAndDanglingAttributes(node);
-	// },
 	[NodeType.Attribute](node) {
 		maybe_transform_node(
 			node as ExpressionLikeAttribute,
@@ -231,7 +226,7 @@ const transform: { [K in NodeType]?: (node: NTMap[K]) => void } = {
 		node.transform.dk = DelimKind["{}"];
 	},
 	[NodeType.MacroInvocation](node) {
-		const name = getIdentifierName(node.callee);
+		const name = getMacroName(node);
 
 		if (
 			IGNORED_MACROS.has(name) ||
@@ -252,28 +247,22 @@ const transform: { [K in NodeType]?: (node: NTMap[K]) => void } = {
 		}
 
 		if (name === "cfg_if") {
-			//
-		}
-
-		if (tk === DelimKind["{}"]) {
+			transformBlockLike(() => transform_macro_cfg_if(node.segments) as any);
+		} else if (tk === DelimKind["{}"]) {
 			transformBlockLike(); /* || (includesTK(node, TK[","]) && transformCallLike()); */
 		} else {
 			transformCallLike(); /* || (includesTK(node, TK[";"]) && transformBlockLike()); */
 		}
 
-		function transformBlockLike() {
-			return maybe_transform_node(
-				node as BlockLikeMacroInvocation,
-				() => rs.toBlockBody(node.segments),
-				(node, snippet) => {
-					const _body = snippet.ast;
-					_body.dk = tk;
+		function transformBlockLike(transform = () => rs.toBlockBody(node.segments)) {
+			return maybe_transform_node(node as BlockLikeMacroInvocation, transform, (node, snippet) => {
+				const _body = snippet.ast;
+				_body.dk = tk;
 
-					node.body = _body;
-					node.segments = _body;
-					transferAttributes(snippet, node);
-				}
-			);
+				node.body = _body;
+				node.segments = _body;
+				transferAttributes(snippet, node);
+			});
 		}
 
 		function transformCallLike() {
@@ -290,9 +279,6 @@ const transform: { [K in NodeType]?: (node: NTMap[K]) => void } = {
 					node.segments = _arguments;
 				}
 			);
-		}
-		function getIdentifierName(node: any) {
-			return is_Identifier(node) ? node.name : is_PathNode(node) ? node.segment.name : "";
 		}
 	},
 	[NodeType.CallExpression](node) {
@@ -355,23 +341,32 @@ function transformMacroDelim(name: string, node: MacroInvocation): 1 | 2 | 3 {
 	return node.segments.dk;
 }
 
-function transformNode(node: Node, parent?: Node, key?: string, index?: any) {
-	if (is_Snippet(node) || is_Program(node)) {
-		registerCommentsAndDanglingAttributes(node);
+// export function createTransformed<S extends Node>(create: () => S): S {
+// 	return transformNode(create());
+// }
+
+const seen = new WeakSet<Node>();
+function transformNode<T extends Node>(node: T, parent?: Node, key?: string, index?: any): T {
+	if (!seen.has(node)) {
+		seen.add(node);
+		if (is_Snippet(node) || is_Program(node)) {
+			registerPogramLike(node);
+		}
+
+		each_childNode(node, transformNode);
+
+		insert_blocks(node, parent, key, index);
+
+		transform[node.nodeType]?.(node as any);
+
+		flatten_typeBounds(node);
+
+		transform_nodeAttributes(node);
 	}
-
-	each_childNode(node, transformNode);
-
-	insert_blocks(parent, key, node, index);
-
-	transform[node.nodeType]?.(node as any);
-
-	flatten_typeBounds(node);
-
-	transform_nodeAttributes(node);
+	return node;
 }
 
-function insert_blocks(parent: Node | undefined, key: string | undefined, node: Node, index: any) {
+function insert_blocks(node: Node, parent?: Node, key?: string, index?: any) {
 	if (parent && key) {
 		if (
 			!is_ExpressionStatement(parent) &&
@@ -479,9 +474,9 @@ function transform_nodeAttributes(node: Node) {
 		for (let i = 0; i < attrs.length; i++) {
 			const attr = attrs[i];
 			if (isReadingSnippet() && is_DocCommentAttribute(attr)) {
-				const index = binarySearchIn(COMMENTS, start(attr), start);
-				__DEV__: assert(index !== -1), assert(end(COMMENTS[index]) === end(attr));
-				COMMENTS.splice(index, 1);
+				const index = binarySearchIn(_COMMENTS, start(attr), start);
+				__DEV__: assert(index !== -1), assert(end(_COMMENTS[index]) === end(attr));
+				_COMMENTS.splice(index, 1);
 			}
 			if (attr.inner) {
 				if (isPrettierIgnoreAttribute(attr)) {
@@ -498,12 +493,25 @@ function transform_nodeAttributes(node: Node) {
 	}
 }
 
-function registerCommentsAndDanglingAttributes(program: Extract<Node, ProgramLike>) {
+function registerPogramLike(program: Extract<Node, ProgramLike>) {
 	const comments = spliceAll(program.comments);
 	const danglingAttributes = spliceAll(program.danglingAttributes);
-	for (let i = 0; i < danglingAttributes.length; i++) transformNode(danglingAttributes[i], program, "danglingAttributes", i);
-	if (!isReadingSnippet()) insertNodes(COMMENTS, comments);
-	insertNodes(DANGLING_ATTRIBUTES, danglingAttributes);
+	for (let i = 0; i < danglingAttributes.length; i++) {
+		const attr = danglingAttributes[i];
+		// if (isReadingSnippet() && is_DocCommentAttribute(attr)) {
+		// }
+		if (is_DocCommentAttribute(attr)) {
+			if (isReadingSnippet()) {
+				const index = binarySearchIn(_COMMENTS, start(attr), start);
+				__DEV__: assert(index !== -1), assert(end(_COMMENTS[index]) === end(attr));
+				_COMMENTS.splice(index, 1);
+			}
+		} else {
+			transformNode(danglingAttributes[i], program, "danglingAttributes", i);
+		}
+	}
+	if (!isReadingSnippet()) insertNodes(_COMMENTS, comments);
+	insertNodes(_DANGLING_ATTRIBUTES, danglingAttributes);
 }
 
 const CommentChildNodes = new WeakMap<Node, Node[]>();

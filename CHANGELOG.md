@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+- feat: custom format for `cfg_if` macro
+- feat: '@' character handling in macro rules match
+- fix: format number trailing dot to float
+- fix: format number no-op exponent to float
+
 ## 0.1.8
 
 - feat(extension): display message when formatting fails due to non-parser errors.

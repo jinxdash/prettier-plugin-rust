@@ -673,8 +673,8 @@ macro_rules! x {
     $vis:vis $NAME:ident,
     $Level:ident,
     $desc:expr,
-    $(@ feature_gate = $gate:expr;)? $(
-      @ future_incompatible = FutureIncompatibleInfo {
+    $(@feature_gate = $gate:expr;)? $(
+      @future_incompatible = FutureIncompatibleInfo {
         $($field:ident: $val:expr),*
         $(,)*
       };
@@ -879,8 +879,7 @@ macro_rules! x {
   };
   (
     impl < $($p:tt),*
-    > TypeFoldable < $tcx:tt > for $s:path
-    { $($variants:tt)* }
+    > TypeFoldable < $tcx:tt > for $s:path { $($variants:tt)* }
     $(
       where
       $($wc:tt)*
@@ -1061,13 +1060,13 @@ macro_rules! x {
   (@ $lit:literal) => {
         write!(scoped_cx!(), $lit)?
   };
-  (@ write($($data:expr),+)) => {
+  (@write($($data:expr),+)) => {
         write!(scoped_cx!(), $($data),+)?
   };
-  (@ print($x:expr)) => {
+  (@print($x:expr)) => {
         scoped_cx!() = $x.print(scoped_cx!())?
   };
-  (@ $method:ident($($arg:expr),*)) => {
+  (@$method:ident($($arg:expr),*)) => {
         scoped_cx!() = scoped_cx!().$method($($arg),*)?
   };
   ($($elem:tt $(($($args:tt)*))?),+) => {
@@ -1318,8 +1317,8 @@ macro_rules! x {
     $vis:vis $NAME:ident,
     $Level:ident,
     $desc:expr,
-    $(@ feature_gate = $gate:expr;)? $(
-      @ future_incompatible = FutureIncompatibleInfo {
+    $(@feature_gate = $gate:expr;)? $(
+      @future_incompatible = FutureIncompatibleInfo {
         $($field:ident: $val:expr),*
         $(,)*
       };
@@ -2915,8 +2914,7 @@ macro_rules! x {
 
   (
     $(#[$($attrs:tt)*])*
-    $vis:vis struct $name:ident
-    { $($body:tt)* }
+    $vis:vis struct $name:ident { $($body:tt)* }
   ) => {
         c! { @parse_fields $(#[$($attrs)*])*, $vis, $name, $($body)* }
   };
@@ -2929,7 +2927,7 @@ macro_rules! x {
   };
 
   (
-    @ parse_fields $(#[$attrs:meta])*,
+    @parse_fields $(#[$attrs:meta])*,
     $vis:vis,
     $name:ident,
     $($fvis:vis $fname:ident: $fty:ty),*
@@ -2939,7 +2937,7 @@ macro_rules! x {
   };
 
   (
-    @ parse_tuple $(#[$attrs:meta])*,
+    @parse_tuple $(#[$attrs:meta])*,
     $vis:vis,
     $name:ident,
     $($fvis:vis $fty:ty),*
@@ -2992,8 +2990,7 @@ macro_rules! x {
       if #[cfg($i_meta:meta)]
       { $($i_tokens:tt)* }
     )else+
-    else
-    { $($e_tokens:tt)* }
+    else { $($e_tokens:tt)* }
   ) => {
         cfg_if! {
             @__items () ;
@@ -3003,9 +3000,9 @@ macro_rules! x {
             (() ( $( $e_tokens )* )) ,
         }
   };
-  (@ __items($($_:meta,)*);) => {};
+  (@__items($($_:meta,)*);) => {};
   (
-    @ __items($($no:meta,)*);
+    @__items($($no:meta,)*);
     (
       ($($yes:meta)?)
       ($($tokens:tt)*)
@@ -3023,7 +3020,7 @@ macro_rules! x {
         }
   };
   (
-    @ __identity
+    @__identity
     $($tokens:tt)*
   ) => {
         $( $tokens )*
@@ -3065,7 +3062,7 @@ macro_rules! x {
             }
         }
   };
-  (@ impl $($T:ident)+) => {
+  (@impl $($T:ident)+) => {
         maybe_tuple_doc! {
             $($T)+ @
             #[stable(feature = "rust1", since = "1.0.0")]

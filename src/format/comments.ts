@@ -476,7 +476,7 @@ export function handleOwnLineComment(ctx: CommentContext) {
 	return handleCommon(ctx);
 }
 export function handleEndOfLineComment(ctx: CommentContext) {
-	const { precedingNode, enclosingNode, followingNode, comment } = ctx;
+	const { precedingNode, enclosingNode, comment } = ctx;
 	if (
 		// handleCallExpressionComments
 		precedingNode &&
@@ -503,13 +503,13 @@ export function handleRemainingComment(ctx: CommentContext) {
 	return handleCommon(ctx);
 }
 
-function handleStructLiteralComments({ precedingNode, enclosingNode, followingNode, comment, ast }: CommentContext) {
+function handleStructLiteralComments({ enclosingNode, followingNode, comment }: CommentContext) {
 	if (enclosingNode && is_StructLiteralPropertySpread(enclosingNode) && followingNode === enclosingNode.expression) {
 		addLeadingComment(enclosingNode, comment);
 	}
 }
 
-function handleVariableDeclaratorComments({ precedingNode, enclosingNode, followingNode, comment, ast }: CommentContext) {
+function handleVariableDeclaratorComments({ enclosingNode, followingNode, comment }: CommentContext) {
 	if (
 		enclosingNode &&
 		(is_xVariableEqualishLike(enclosingNode) || is_ReassignmentNode(enclosingNode)) &&
@@ -531,7 +531,7 @@ function handleVariableDeclaratorComments({ precedingNode, enclosingNode, follow
 	}
 }
 
-function handleMixedInOuterAttributeComments({ precedingNode, enclosingNode, followingNode, comment, ast }: CommentContext) {
+function handleMixedInOuterAttributeComments({ precedingNode, enclosingNode, followingNode, comment }: CommentContext) {
 	if (enclosingNode && hasOuterAttributes(enclosingNode) && end(comment) <= ownStart(enclosingNode)) {
 		if (isPrettierIgnoreComment(comment) || isPrettierIgnoreAttribute(comment)) {
 			setPrettierIgnoreTarget(enclosingNode, comment);
@@ -560,28 +560,21 @@ function handleMixedInOuterAttributeComments({ precedingNode, enclosingNode, fol
 }
 function handleAttributeComments({ precedingNode, enclosingNode, followingNode, comment, ast }: CommentContext) {
 	if (is_AttributeOrDocComment(comment)) {
-		if (comment.inner) {
-			if (
-				enclosingNode &&
-				is_FunctionDeclaration(enclosingNode) &&
-				(!followingNode || !is_StatementNode(followingNode)) &&
-				(!precedingNode || !is_StatementNode(precedingNode))
-			) {
-				if (enclosingNode.body) {
-					if (enclosingNode.body.length === 0) {
-						addDanglingComment(enclosingNode, comment, DCM["body"]);
-					} else {
-						addLeadingComment(enclosingNode.body[0], comment);
-					}
+		if (
+			comment.inner &&
+			enclosingNode &&
+			is_FunctionDeclaration(enclosingNode) &&
+			(!followingNode || !is_StatementNode(followingNode)) &&
+			(!precedingNode || !is_StatementNode(precedingNode))
+		) {
+			if (enclosingNode.body) {
+				if (canAttachCommentInLocArray(enclosingNode.body)) {
+					addDanglingComment(enclosingNode, comment, DCM["body"]);
 				} else {
-					addLeadingComment(enclosingNode, comment);
+					addLeadingComment(enclosingNode.body[0], comment);
 				}
 			} else {
-				if (followingNode) {
-					addLeadingComment(followingNode, comment);
-				} else {
-					addDanglingComment(enclosingNode || ast, comment, DCM["body"]);
-				}
+				addLeadingComment(enclosingNode, comment);
 			}
 		} else {
 			// if (comment.loc.url().startsWith("tests/samples/macro/attr.rs") && getContext().options.danglingAttributes.includes(comment)) {
@@ -595,8 +588,14 @@ function handleAttributeComments({ precedingNode, enclosingNode, followingNode, 
 			// }
 			if (followingNode) {
 				addLeadingComment(followingNode, comment);
+			} else if (enclosingNode) {
+				for (var key in DCM)
+					if (key in enclosingNode) {
+						addDanglingComment(enclosingNode, comment, key as DCM);
+						return;
+					}
 			} else {
-				addDanglingComment(enclosingNode || ast, comment, DCM["body"]);
+				addDanglingComment(ast, comment, DCM["body"]);
 			}
 		}
 	}
@@ -693,7 +692,7 @@ function handleMacroRuleComments(ctx: CommentContext) {
 }
 
 function handleStatementComments(ctx: CommentContext) {
-	const { precedingNode, enclosingNode, followingNode, comment } = ctx;
+	const { precedingNode, comment } = ctx;
 	if (isEndOfLine(comment) && precedingNode && (is_StatementNode(precedingNode) || precedingNode.loc.sliceText().endsWith(";"))) {
 		addTrailingComment(precedingNode, comment);
 	}
@@ -710,7 +709,7 @@ function addCommentToBlock(block: NodeWithBodyOrCases, comment: AnyComment) {
 }
 
 function handleIfBlockExpressionComments(ctx: CommentContext) {
-	const { comment, precedingNode, enclosingNode, followingNode } = ctx;
+	const { comment, enclosingNode } = ctx;
 	if (enclosingNode && is_IfBlockExpression(enclosingNode)) {
 		const { condition, body, else: else_ } = enclosingNode;
 		if (comment.loc.isBefore(condition)) {
@@ -727,7 +726,7 @@ function handleIfBlockExpressionComments(ctx: CommentContext) {
 	}
 }
 
-function handleMemberExpressionComments({ comment, precedingNode, enclosingNode, followingNode }: CommentContext) {
+function handleMemberExpressionComments({ comment, precedingNode, enclosingNode }: CommentContext) {
 	if (enclosingNode && is_MemberAccessLike(enclosingNode)) {
 		if (isStartOfLine(comment) || !precedingNode) addLeadingComment(enclosingNode, comment);
 		else addTrailingComment(precedingNode, comment);
@@ -737,18 +736,22 @@ function handleMemberExpressionComments({ comment, precedingNode, enclosingNode,
 	return false;
 }
 
-function handleDanglingComments({ comment, precedingNode, enclosingNode, followingNode }: CommentContext) {
+function handleDanglingComments({ comment, enclosingNode }: CommentContext) {
 	if (enclosingNode) {
 		for (var key in DCM) {
 			if (key in enclosingNode) {
 				var arr: LocArray = enclosingNode[key];
-				if (is_LocArray(arr) && (arr.length === 0 || arr.every((node) => !canAttachComment(node))) && arr.loc.contains(comment)) {
+				if (is_LocArray(arr) && canAttachCommentInLocArray(arr) && arr.loc.contains(comment)) {
 					addDanglingComment(enclosingNode, comment, key as DCM);
 					return;
 				}
 			}
 		}
 	}
+}
+
+function canAttachCommentInLocArray(arr: LocArray) {
+	return arr.length === 0 || arr.every((node) => !canAttachComment(node));
 }
 
 function isOwnLine(comment: AnyComment) {

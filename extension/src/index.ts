@@ -1,7 +1,7 @@
 import { rs } from "jinx-rust";
 import path from "node:path";
 import prettier, { Config, resolveConfig } from "prettier";
-import * as plugin from "prettier-plugin-rust";
+import plugin from "prettier-plugin-rust";
 import { ExtensionContext, languages, Position, Range, TextDocument, TextEdit, window } from "vscode";
 
 const console = createOutputChannel("Prettier (Rust)");

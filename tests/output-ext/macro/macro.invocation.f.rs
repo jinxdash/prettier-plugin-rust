@@ -251,20 +251,20 @@ fn main() {
 }
 
 cfg_if! {
-    if #[cfg(feature = "std_detect_file_io")] {
-        #[cfg_attr(test, macro_use(println))]
-        extern crate std;
+  if #[cfg(feature = "std_detect_file_io")] {
+    #[cfg_attr(test, macro_use(println))]
+    extern crate std;
 
-        #[allow(unused_imports)]
-        use std::{arch, fs, io, mem, sync};
-    } else {
-        #[cfg(test)]
-        #[macro_use(println)]
-        extern crate std;
+    #[allow(unused_imports)]
+    use std::{ arch, fs, io, mem, sync };
+  } else {
+    #[cfg(test)]
+    #[macro_use(println)]
+    extern crate std;
 
-        #[allow(unused_imports)]
-        use core::{arch, mem, sync};
-    }
+    #[allow(unused_imports)]
+    use core::{ arch, mem, sync };
+  }
 }
 
 op_utils! {
@@ -458,13 +458,18 @@ provide! {
 }
 
 cfg_if::cfg_if! {
-    if #[cfg(unix)] {
-    } else if #[cfg(any(target_os = "hermit",
-                        target_os = "solid_asp3",
-                        all(target_vendor = "fortanix", target_env = "sgx")
-    ))] {
-    } else if #[cfg(all(windows, not(miri)))] {
-    }
+  if #[cfg(unix)] {
+  } else if
+    #[cfg(
+      any(
+        target_os = "hermit",
+        target_os = "solid_asp3",
+        all(target_vendor = "fortanix", target_env = "sgx")
+      )
+    )]
+  {
+  } else if #[cfg(all(windows, not(miri)))] {
+  }
 }
 
 ast_fragments! {

@@ -1,5 +1,5 @@
 import { createPrettierPrinter, rs_print_samples } from "../ext/jinx-rust/scripts/utils";
-import { plugin } from "../src/format/plugin";
+import plugin from "../src/index";
 
 // for_each_ts_file(path.resolve("src"), (file) => {
 // 	console.log(cmd(file.path), file.content.includes("\r"));
