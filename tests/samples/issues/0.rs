@@ -568,6 +568,22 @@ let mut g_buffer = MultiOutputFrameBuffer::with_depth_buffer(api.facade, [("colo
 macro_rules! foo {
     ($a:ident : $b:ty) => {};
     ($a:ident $b:ident $c:ident) => {};
+    ($( if #[cfg($meta:meta)] { $($tokens:tt)* } ) else * else { $($tokens2:tt)* }) => {};
+    (if #[cfg($i_met:meta)] { $($i_tokens:tt)* } $(else if #[cfg($e_met:meta)] { $($e_tokens:tt)* })*) => {};
+    ($expression:expr, $(|)? $( $pattern:pat_param )|+ $( if $guard: expr )? $(,)?) => {};
+    (@main ($($not:meta,)*) ; ( ($($m:meta),*) ($($tokens:tt)*) ), $($rest:tt)*) => {};
+    (@main {} if let $pat:pat = $expr:expr; $($tt:tt)+) => {};
+    (@main {} if $expr:expr; $($tt:tt)+) => {};
+    (@main { $($other:tt)* } let $pat:pat = $expr:expr; $($tt:tt)+) => {};
+    (@main { $($other:tt)* } let $ident:ident: $ty:ty = $expr:expr; $($tt:tt)+) => {};
+    (@main { $($other:tt)* } let $pat1:pat | $($pat:pat)|+ = $expr:expr; $($tt:tt)+) => {};
+    (@main { $($other:tt)+ } if let $pat:pat = $expr:expr; $($tt:tt)+) => {};
+    (@main { $($other:tt)* } if let $pat1:pat | $($pat:pat)|+ = $expr:expr; $($tt:tt)+) => {};
+    (@main { $($other:tt)+ } if $expr:expr; $($tt:tt)+) => {};
+    (@main { $($other:tt)* } then { $($then:tt)* }) => {};
+    (@main ($($tt:tt)*) then { $($then:tt)* } else { $($other:tt)* }) => {};
+    (@main ($($tt:tt)*) then { $($then:tt)* }) => {};
+    (@main ($($tt:tt)*) $head:tt $($tail:tt)*) => {};
 }
 
 self.0.take_action(Log).result().map_err(|()| LoggerError);

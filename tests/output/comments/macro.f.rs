@@ -5,12 +5,12 @@ a!(~ {  // 2
 });
 
 cfg_if::cfg_if! {
-    if #[attr] {
-        if 0 {
-        } else {
-            // ERROR!
-        }
-    } 
+  if #[attr] {
+    if 0 {
+    } else {
+      // ERROR!
+    }
+  }
 }
 
 a! {

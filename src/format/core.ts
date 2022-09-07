@@ -64,7 +64,7 @@ import {
 	UnionDeclaration,
 	UnionPattern,
 	WhileBlockExpression,
-	YieldExpression,
+	YieldExpression
 } from "jinx-rust";
 import {
 	DelimChars,
@@ -147,7 +147,7 @@ import {
 	is_UnwrapExpression,
 	is_VariableDeclarationNode,
 	ownStart,
-	start,
+	start
 } from "jinx-rust/utils";
 import { assert, AssertTypesEq, exit, find_last, flat, Identity, iLast, last_of, Map_get, Narrow, spread } from "../utils/common";
 import {
@@ -163,7 +163,7 @@ import {
 	isPreviousLineEmpty,
 	printCommentsSeparately,
 	printDanglingComments,
-	withComments,
+	withComments
 } from "./comments";
 import {
 	hasComplexGenerics,
@@ -172,7 +172,7 @@ import {
 	hasComplexTypeArguments,
 	hasComplexTypeBounds,
 	isShortGenericParameterDeclaration,
-	is_short,
+	is_short
 } from "./complexity";
 import {
 	align,
@@ -198,7 +198,7 @@ import {
 	lineSuffixBoundary,
 	removeLines,
 	softline,
-	willBreak,
+	willBreak
 } from "./external";
 import {
 	f,
@@ -211,7 +211,7 @@ import {
 	is_printing_macro,
 	pathCall,
 	pathCallEach,
-	print,
+	print
 } from "./plugin";
 import { canInlineBlockBody, emptyContent, needsParens, shouldFlatten } from "./styling";
 import { BlockLikeMacroInvocation, CallLikeMacroInvocation, is_CallExpression_or_CallLikeMacroInvocation } from "./transform";
@@ -358,14 +358,18 @@ function is_unary_token(item: MacroMatchSegment | undefined) {
 			return false;
 	}
 }
-function is_optional_unary(item: MacroMatchSegment | undefined) {
-	return is_optional_token(item) && is_unary_token(item.segments[0]);
+function can_unary(node: MacroMatchSegment) {
+	return (!is_PunctuationToken(node) || is_unary_token(node)) && (!is_MacroGroup(node) || is_optional_unary(node));
 }
 function is_optional_token(item: MacroMatchSegment | undefined): item is MacroGroup<MacroMatchSegment> & { segments: [PunctuationToken] } {
 	return !!item && is_MacroGroup(item) && item.kind === "?" && item.segments.length === 1 && is_PunctuationToken(item.segments[0]);
 }
-function can_unary(node: MacroMatchSegment) {
-	return (!is_PunctuationToken(node) || is_unary_token(node)) && (!is_MacroGroup(node) || is_optional_unary(node));
+function is_optional_unary(item: MacroMatchSegment | undefined) {
+	return is_optional_token(item) && is_unary_token(item.segments[0]);
+}
+
+function is_optional_segment(item: Node): item is MacroGroup {
+	return is_MacroGroup(item) && item.kind === "?";
 }
 
 export function printRuleMatch<T extends MacroRuleDeclaration | MacroInlineRuleDeclaration>(print: print<T>, rule: T) {
@@ -414,7 +418,7 @@ export function printRuleMatch<T extends MacroRuleDeclaration | MacroInlineRuleD
 			return arr.some(
 				(item, i, a) =>
 					(is_match_any(item) && arr.length !== 1) ||
-					(i !== a.length - 1 && isDeclStart(item, a[i + 1]) && has_decl === (has_decl = true))
+					(!iLast(i, a) && isDeclStart(item, a[i + 1]) && has_decl === (has_decl = true))
 			);
 		}
 
@@ -471,12 +475,11 @@ export function printRuleMatch<T extends MacroRuleDeclaration | MacroInlineRuleD
 						return "";
 					case TK["!"]:
 						if (prev && is_ident(prev) && is_DelimGroup(next)) {
-							if (next.segments.dk === DelimKind["{}"]) {
-								return " ";
-							} else {
-								return "";
-							}
+							return next.segments.dk === DelimKind["{}"] ? " " : "";
 						}
+						break;
+					case TK["@"]:
+						return is_ident(next) && (!prev || is_MacroGroup(prev) || is_DelimGroup(prev)) ? "" : " ";
 				}
 
 				return is_unary_token(item) && //
@@ -544,17 +547,24 @@ export function printRuleMatch<T extends MacroRuleDeclaration | MacroInlineRuleD
 				return isParamsLike || is_tk(next) ? " " : line;
 			}
 
+			
+			const next_1 = next !== last_of(arr) && arr[arr.indexOf(next) + 1];
 			if (is_ident(item) && is_DelimGroup(next) && next.segments.dk === DelimKind["()"]) {
-				// if (next_1 !== arr[0] || !is_DelimGroup(next_1) || next_1.segments.tk !== DelimKind["()"]) {
-				// }
-				if (!(is_match_any(next) && is_match_any(arr[arr.indexOf(next) + 1]))) {
+				if (!next_1 || !is_match_any(next_1)) {
 					return "";
 				}
 			}
 
-			if (is_match_any(next)) {
+			if (is_match_any(next) && (!is_DelimGroup(next) || (next_1 && is_match_any(next_1)))) {
 				return line;
 			}
+
+			// if (is_ident(item) && !is_ident(next) && !(is_DelimGroup(next) && next.segments.dk === DelimKind["{}"])) {
+			// 	const next_1 = arr[arr.indexOf(next) + 1];
+			// 	if (next_1 && typeof join_item(next, next_1, item) === "object") {
+			// 		return line;
+			// 	}
+			// }
 
 			return " ";
 		}
@@ -618,6 +628,7 @@ export function printRuleMatch<T extends MacroRuleDeclaration | MacroInlineRuleD
 		);
 	}
 }
+
 export function printRuleTransform<T extends MacroRuleDeclaration | MacroInlineRuleDeclaration>(
 	print: print<T>,
 	node: T,

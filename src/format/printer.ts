@@ -52,7 +52,7 @@ import {
 	printUnionPattern,
 } from "./core";
 import { DCM, Doc, group, hardline, ifBreak, indent, join, line, softline, willBreak } from "./external";
-import { f, getOptions, getParentNode, pathCall, print, sg_duo, sg_single } from "./plugin";
+import { f, getOptions, getParentNode, pathCall, type print, sg_duo, sg_single } from "./plugin";
 import { needsParens, stmtNeedsSemi } from "./styling";
 import {
 	BlockLikeMacroInvocation,
