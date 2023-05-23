@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 0.1.9
+
 - feat: format `cfg_if!` macros
 - feat: format `@` character in `macro_rules`
 - fix: format `<number>.` and `<number>e0` to float instead of int ([#14](https://github.com/jinxdash/prettier-plugin-rust/issues/14), [#16](https://github.com/jinxdash/prettier-plugin-rust/issues/16))

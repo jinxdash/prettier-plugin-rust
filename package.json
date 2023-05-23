@@ -1,6 +1,6 @@
 {
 	"name": "prettier-plugin-rust",
-	"version": "0.1.8",
+	"version": "0.1.9",
 	"description": "Prettier plugin for Rust",
 	"repository": {
 		"type": "git",
