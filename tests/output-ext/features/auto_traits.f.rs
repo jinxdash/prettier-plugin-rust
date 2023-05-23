@@ -13,4 +13,5 @@ auto trait T {
 auto trait T {
   #![attr_1] // comment
 }
+
 // source: "../../../ext/jinx-rust/tests/samples/features/auto_traits.rs"

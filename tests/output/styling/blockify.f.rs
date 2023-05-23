@@ -31,4 +31,5 @@
   || -> T const {},
   || -> T async {},
 ];
+
 // source: "../../samples/styling/blockify.rs"

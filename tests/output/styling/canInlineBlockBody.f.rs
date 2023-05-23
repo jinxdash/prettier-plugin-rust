@@ -170,4 +170,5 @@
     }
   },
 ];
+
 // source: "../../samples/styling/canInlineBlockBody.rs"

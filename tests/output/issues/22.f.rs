@@ -70,4 +70,5 @@ fn inner_attr() {
   }
   #![attr]
 }
+
 // source: "../../samples/issues/22.rs"

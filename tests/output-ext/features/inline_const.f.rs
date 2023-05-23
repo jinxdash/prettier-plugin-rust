@@ -3,4 +3,5 @@
 fn f() {
   const {}
 }
+
 // source: "../../../ext/jinx-rust/tests/samples/features/inline_const.rs"

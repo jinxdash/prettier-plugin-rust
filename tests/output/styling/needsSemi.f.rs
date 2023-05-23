@@ -8,4 +8,5 @@ fn f() {
     1
   }
 }
+
 // source: "../../samples/styling/needsSemi.rs"

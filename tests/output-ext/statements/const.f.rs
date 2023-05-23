@@ -14,4 +14,5 @@ const MY_A: A = A {
     }
   },
 };
+
 // source: "../../../ext/jinx-rust/tests/samples/statements/const.rs"

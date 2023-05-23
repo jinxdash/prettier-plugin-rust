@@ -28,4 +28,5 @@ mod u8 {
     u8
   }
 }
+
 // source: "../../../ext/jinx-rust/tests/samples/expressions/ident.rs"

@@ -194,4 +194,5 @@ accept_pat!((p | q,));
 accept_pat!(TS(p | q));
 accept_pat!(NS { f: p | q });
 accept_pat!([p | q]);
+
 // source: "../../../ext/jinx-rust/tests/samples/patterns/union.rs"

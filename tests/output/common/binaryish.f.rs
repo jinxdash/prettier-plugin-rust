@@ -540,4 +540,5 @@ while
     someVeryLongArgD
   )
 {}
+
 // source: "../../samples/common/binaryish.rs"

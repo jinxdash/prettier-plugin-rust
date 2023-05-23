@@ -96,4 +96,5 @@ struct A;
 #[/* comment */]
 #[/* comment */]
 struct A;
+
 // source: "../../samples/comments/dangling.rs"

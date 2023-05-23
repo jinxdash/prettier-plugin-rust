@@ -387,4 +387,5 @@ const appIDs = createSelector(
   PubXURLParams.APP_IDS,
   |rawAppIDs| -> Array<AppID> { deserializeList(rawAppIDs) }
 );
+
 // source: "../../samples/common/types.rs"

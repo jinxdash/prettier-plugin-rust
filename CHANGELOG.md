@@ -5,6 +5,7 @@
 - feat: format `cfg_if!` macros
 - feat: format `@` character in `macro_rules`
 - fix: format `<number>.` and `<number>e0` to float instead of int ([#14](https://github.com/jinxdash/prettier-plugin-rust/issues/14), [#16](https://github.com/jinxdash/prettier-plugin-rust/issues/16))
+- fix: always end files with a newline ([#21](https://github.com/jinxdash/prettier-plugin-rust/issues/21)
 - fix: avoid removing optional semi in rare [rust compiler bug](https://github.com/rust-lang/rust/issues/70844) ([#22](https://github.com/jinxdash/prettier-plugin-rust/issues/22))
 
 ## 0.1.8

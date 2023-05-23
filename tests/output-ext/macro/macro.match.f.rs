@@ -459,4 +459,5 @@ macro_rules! c {
     $(,)?
   ) => {};
 }
+
 // source: "../../../ext/jinx-rust/tests/samples/macro/macro.match.rs"

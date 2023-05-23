@@ -65,4 +65,5 @@ fn main() {
   TupleStruct(a, a, b) = TupleStruct(1, 2);
   TupleStruct(a, b) = TupleStruct(0, 1);
 }
+
 // source: "../../../ext/jinx-rust/tests/samples/features/destructuring_assignment.rs"

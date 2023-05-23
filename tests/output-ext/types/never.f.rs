@@ -18,4 +18,5 @@ impl A<!> for B {
 }
 impl A for ! {}
 type A = !;
+
 // source: "../../../ext/jinx-rust/tests/samples/types/never.rs"

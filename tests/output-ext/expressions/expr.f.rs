@@ -318,4 +318,5 @@ pub trait Foo: Iterator<Item = <Self as Foo>::Key> {}
 fn f() {
   ::m!(S, x);
 }
+
 // source: "../../../ext/jinx-rust/tests/samples/expressions/expr.rs"

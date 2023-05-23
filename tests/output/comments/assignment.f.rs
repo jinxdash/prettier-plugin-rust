@@ -308,4 +308,5 @@ fn foo() {
     ..a
   } = a);
 }
+
 // source: "../../samples/comments/assignment.rs"

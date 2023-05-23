@@ -190,4 +190,5 @@ fn x() {
   foo(#[attr] a.b.c);
   foo(#[attr] a.b.c);
 }
+
 // source: "../../../ext/jinx-rust/tests/samples/expressions/parens.rs"

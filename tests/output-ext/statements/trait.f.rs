@@ -27,4 +27,5 @@ trait A<X: T2 + ?Sized> {}
 pub trait A {}
 pub trait C = A + B;
 pub trait A<R: D>: Sized {}
+
 // source: "../../../ext/jinx-rust/tests/samples/statements/trait.rs"

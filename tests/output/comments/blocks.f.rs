@@ -309,4 +309,5 @@ fn foo() {
     // work
   }).await;
 }
+
 // source: "../../samples/comments/blocks.rs"

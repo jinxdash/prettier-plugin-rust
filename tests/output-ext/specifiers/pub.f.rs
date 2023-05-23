@@ -72,4 +72,5 @@ pub macro m() {}
 pub(in Self::f) struct Z;
 pub extern crate self as name;
 pub use name::name as bug;
+
 // source: "../../../ext/jinx-rust/tests/samples/specifiers/pub.rs"

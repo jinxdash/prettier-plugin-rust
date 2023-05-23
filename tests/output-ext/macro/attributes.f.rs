@@ -708,4 +708,5 @@ struct Foo;
   )
 )]
 const MIN_ALIGN: usize = 16;
+
 // source: "../../../ext/jinx-rust/tests/samples/macro/attributes.rs"

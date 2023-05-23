@@ -7,4 +7,5 @@ type A: (impl B + C);
 
 trait A = B + C;
 trait A = (impl B + C);
+
 // source: "../../samples/styling/needsParens.rs"

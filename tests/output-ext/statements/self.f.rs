@@ -31,4 +31,5 @@ fn f(&self) -> Self;
 // fn f(self::S: S) {}
 // fn g(&self::S: &S) {}
 // fn h(&mut self::S: &mut S) {}
+
 // source: "../../../ext/jinx-rust/tests/samples/statements/self.rs"

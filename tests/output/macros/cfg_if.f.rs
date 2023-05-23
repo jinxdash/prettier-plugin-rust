@@ -74,4 +74,5 @@
   },
   cfg_if! { if true{} },
 ];
+
 // source: "../../samples/macros/cfg_if.rs"

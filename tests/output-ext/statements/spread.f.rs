@@ -30,4 +30,5 @@ trait T {
 extern "C" {
   pub fn foo(x: i32, ...);
 }
+
 // source: "../../../ext/jinx-rust/tests/samples/statements/spread.rs"

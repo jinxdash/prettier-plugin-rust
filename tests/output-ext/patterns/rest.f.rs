@@ -60,4 +60,5 @@ fn b() {
   let a @ [b, .., c] = [C, mk_c(), C];
   let a @ [b, mid @ .., c] = [C, mk_c(), C];
 }
+
 // source: "../../../ext/jinx-rust/tests/samples/patterns/rest.rs"

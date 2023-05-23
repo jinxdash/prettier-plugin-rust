@@ -30,4 +30,5 @@
 		else { d!(); }
 	},
 ];
+
 // source: "../../samples/macros/if_chain.rs"

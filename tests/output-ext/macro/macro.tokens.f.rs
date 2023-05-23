@@ -492,4 +492,5 @@ let ret = structure.gen_impl(
     }
 }
 );
+
 // source: "../../../ext/jinx-rust/tests/samples/macro/macro.tokens.rs"

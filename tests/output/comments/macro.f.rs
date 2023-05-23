@@ -23,4 +23,5 @@ x! {~ {
     // ERROR!
 }
 }
+
 // source: "../../samples/comments/macro.rs"

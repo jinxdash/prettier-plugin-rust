@@ -106,4 +106,5 @@ const g = classnames(A {
 
 const h = A { foo: "bar", baz: r"Lorem
 ipsum" };
+
 // source: "../../samples/common/members.rs"

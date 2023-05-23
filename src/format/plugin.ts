@@ -1,7 +1,8 @@
-import { AttributeOrComment, IfBlockExpression, LocArray, Node, Program, rs } from "jinx-rust";
+import { AttributeOrComment, IfBlockExpression, Node, Program, rs } from "jinx-rust";
 import {
 	ArrayProps,
 	BoolProps,
+	NodeProps,
 	end,
 	hasAttributes,
 	insertNodes,
@@ -18,10 +19,9 @@ import {
 	is_Node,
 	is_PunctuationToken,
 	is_UnionPattern,
-	NodeProps,
 	start,
 } from "jinx-rust/utils";
-import { assert, color, each, exit, iLast, is_array, map_tagged_template, Narrow, print_string } from "../utils/common";
+import { Narrow, assert, color, each, exit, iLast, is_array, map_tagged_template, print_string } from "../utils/common";
 import {
 	CF,
 	escapeComments,
@@ -38,7 +38,7 @@ import {
 } from "./comments";
 import { withCheckContext } from "./complexity";
 import { isNoopExpressionStatement, maybeEmptyLine } from "./core";
-import { AstPath, CustomOptions, Doc, group, hardline, indent, line, Plugin, softline, Symbol_comments } from "./external";
+import { AstPath, CustomOptions, Doc, Plugin, Symbol_comments, group, hardline, indent, line, softline } from "./external";
 import { printer } from "./printer";
 import { needsInnerParens, needsOuterSoftbreakParens, shouldPrintOuterAttributesAbove } from "./styling";
 import { getCommentChildNodes, isTransformed, transform_ast } from "./transform";
@@ -246,7 +246,6 @@ function genericPrint() {
 export function canAttachComment(n: Node) {
 	return !is_Comment(n) && !isNoopExpressionStatement(n) && !is_MissingNode(n) && !is_PunctuationToken(n);
 }
-
 
 export const plugin: Plugin<Node> = {
 	languages: [

@@ -106,4 +106,5 @@ enum Unsigned {
   U64Limit = (u64::MAX as u128) + 1,
   Next,
 }
+
 // source: "../../../ext/jinx-rust/tests/samples/features/arbitrary_enum_discriminant.rs"

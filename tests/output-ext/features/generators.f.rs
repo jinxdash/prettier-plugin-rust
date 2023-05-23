@@ -11,4 +11,5 @@
     });
   },
 ];
+
 // source: "../../../ext/jinx-rust/tests/samples/features/generators.rs"

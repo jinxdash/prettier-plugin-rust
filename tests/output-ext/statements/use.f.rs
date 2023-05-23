@@ -166,4 +166,5 @@ use imports_with_attr;
 use std::f64::consts::{ SQRT_2, E, PI };
 #[rustfmt::skip]
 use std::fmt::{self, {Display, Formatter}};
+
 // source: "../../../ext/jinx-rust/tests/samples/statements/use.rs"
