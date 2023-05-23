@@ -38,4 +38,5 @@ const A {
   bar: bazAndSomething,
   quxIsLong,
 } = someBigFunctionName("foo")("bar");
+
 // source: "../../samples/common/destructuring.rs"

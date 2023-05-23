@@ -934,4 +934,5 @@ pub extern "ABI" fn f() {
   0 > (0 > 0),
   0 > (0..0),
 ];
+
 // source: "../../../ext/jinx-rust/tests/samples/expressions/precedence.rs"

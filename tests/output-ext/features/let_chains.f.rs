@@ -38,4 +38,5 @@ fn f() {
   while let A(ref a) = e && let b = a && let _p = b {}
   while let A(ref a) = e && let R { c: d, y: _ } = a && let B = d {}
 }
+
 // source: "../../../ext/jinx-rust/tests/samples/features/let_chains.rs"

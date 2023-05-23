@@ -28,5 +28,6 @@ let zzzz =
 
   c, //
 ];
+
 // format: lost 4 comments
 // source: "../../samples/issues/nth-pass.rs"

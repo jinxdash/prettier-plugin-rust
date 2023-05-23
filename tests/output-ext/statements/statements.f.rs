@@ -153,4 +153,5 @@ extern r#"C"# {
 }
 
 type T = extern r#"C"# fn();
+
 // source: "../../../ext/jinx-rust/tests/samples/statements/statements.rs"

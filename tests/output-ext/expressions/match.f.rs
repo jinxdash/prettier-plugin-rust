@@ -280,4 +280,5 @@ fn a() {
     }
   }
 }
+
 // source: "../../../ext/jinx-rust/tests/samples/expressions/match.rs"

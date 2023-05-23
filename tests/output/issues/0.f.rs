@@ -2365,4 +2365,5 @@ let notify::event::Event {
   paths,
   ..
 } = event;
+
 // source: "../../samples/issues/0.rs"

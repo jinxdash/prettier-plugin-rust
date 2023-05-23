@@ -861,4 +861,5 @@ source
     scan(|acc, x| acc + x, 0)
   )
   .subscribe(|x| console.log(x));
+
 // source: "../../samples/common/chains.rs"

@@ -3391,4 +3391,5 @@ macro complex_nonterminal($nt_item:item) {
 
     n!(a $nt_item b); // comment
 }
+
 // source: "../../../ext/jinx-rust/tests/samples/macro/macro.transform.rs"

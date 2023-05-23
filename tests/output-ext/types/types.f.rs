@@ -397,4 +397,5 @@ mod a {
 
 pub type b = Box<dyn t + sync::Send + sync::Sync + 'static>;
 pub type b = Box<dyn for<'tcx> e<'tcx> + sync::Send + sync::Sync + 'static>;
+
 // source: "../../../ext/jinx-rust/tests/samples/types/types.rs"

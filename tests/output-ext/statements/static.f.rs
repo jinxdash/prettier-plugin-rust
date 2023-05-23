@@ -8,4 +8,5 @@ pub static B: &'static a = unsafe { &q };
 static A: fn(_) -> u8 = |_| 8;
 static BOO: dyn Fn() -> _ = "";
 static x: _;
+
 // source: "../../../ext/jinx-rust/tests/samples/statements/static.rs"

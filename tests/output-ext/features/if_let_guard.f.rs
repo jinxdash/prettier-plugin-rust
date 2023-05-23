@@ -11,4 +11,5 @@ fn main() {
     _ => {}
   }
 }
+
 // source: "../../../ext/jinx-rust/tests/samples/features/if_let_guard.rs"

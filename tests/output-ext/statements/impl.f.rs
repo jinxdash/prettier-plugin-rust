@@ -54,4 +54,5 @@ impl A for Box<C> {}
 impl A for lib::Something<C> {}
 impl A for D<C> {}
 impl<T: ::std::fmt::Display> A<T> {}
+
 // source: "../../../ext/jinx-rust/tests/samples/statements/impl.rs"

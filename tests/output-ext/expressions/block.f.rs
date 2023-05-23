@@ -125,4 +125,5 @@ a::b(async move {
     f!("g: {}", h);
   }
 });
+
 // source: "../../../ext/jinx-rust/tests/samples/expressions/block.rs"

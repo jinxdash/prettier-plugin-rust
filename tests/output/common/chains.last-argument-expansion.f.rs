@@ -274,4 +274,5 @@ const contentTypes = |tile, singleSelection| {
     }
   );
 };
+
 // source: "../../samples/common/chains.last-argument-expansion.rs"

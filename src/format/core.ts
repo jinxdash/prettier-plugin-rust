@@ -49,6 +49,7 @@ import {
 	RangeNode,
 	RestPattern,
 	ReturnExpression,
+	SourceFile,
 	StructDeclaration,
 	StructLiteral,
 	StructLiteralPropertySpread,
@@ -129,6 +130,7 @@ import {
 	is_ReassignmentExpression,
 	is_ReassignmentNode,
 	is_RestPattern,
+	is_SourceFile,
 	is_StructDeclaration,
 	is_StructLiteral,
 	is_StructLiteralProperty,
@@ -149,7 +151,7 @@ import {
 	ownStart,
 	start,
 } from "jinx-rust/utils";
-import { assert, AssertTypesEq, exit, find_last, flat, Identity, iLast, last_of, Map_get, Narrow, spread } from "../utils/common";
+import { AssertTypesEq, Identity, Map_get, Narrow, assert, exit, find_last, flat, iLast, last_of, spread } from "../utils/common";
 import {
 	CF,
 	getFirstComment,
@@ -175,15 +177,15 @@ import {
 	is_short,
 } from "./complexity";
 import {
-	align,
 	AstPath,
+	DCM,
+	Doc,
+	align,
 	breakParent,
 	canBreak,
 	cleanDoc,
 	conditionalGroup,
-	DCM,
 	dedentToRoot,
-	Doc,
 	fill,
 	getDocParts,
 	group,
@@ -329,6 +331,10 @@ export function printBodyOrCases<T extends NodeWithBodyOrCases | BlockLikeMacroI
 	if (comments) printed.push(comments);
 	const ccomments = printDanglingCommentsForInline(node, DCM["cases"]);
 	if (ccomments) printed.push(ccomments);
+
+	if (is_Program(node) && is_SourceFile(getParentNode(node)!) && printed.length > 0 && !comments) {
+		printed.push(hardline);
+	}
 
 	return printed;
 

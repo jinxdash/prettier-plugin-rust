@@ -107,4 +107,5 @@ const A {
   // prettier-ignore
   bar7 :            a,
 } = foo;
+
 // source: "../../samples/comments/ignore.rs"

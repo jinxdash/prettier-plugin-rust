@@ -16,4 +16,5 @@ fn main() {
   let mut r#async = 1;
   union as T;
 }
+
 // source: "../../../ext/jinx-rust/tests/samples/statements/union.rs"

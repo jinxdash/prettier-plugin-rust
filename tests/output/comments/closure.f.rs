@@ -42,4 +42,5 @@ const rootEpic = |actions, store|
       getLogger().error(err);
       return stream;
     });
+
 // source: "../../samples/comments/closure.rs"

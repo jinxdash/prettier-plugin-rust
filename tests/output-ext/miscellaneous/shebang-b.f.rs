@@ -6,4 +6,5 @@
 //!
 
 use std;
+
 // source: "../../../ext/jinx-rust/tests/samples/miscellaneous/shebang-b.rs"

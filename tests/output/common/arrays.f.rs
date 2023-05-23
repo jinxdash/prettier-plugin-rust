@@ -316,4 +316,5 @@ let test_case = [
     45,
   ],
 ];
+
 // source: "../../samples/common/arrays.rs"

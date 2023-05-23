@@ -22,4 +22,5 @@ extern {
   pub(super) const fn foo() -> *mut Bar;
   pub(crate) unsafe fn foo() -> *mut Bar;
 }
+
 // source: "../../../ext/jinx-rust/tests/samples/specifiers/extern.rs"

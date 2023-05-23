@@ -171,4 +171,5 @@ literal";
     })
   ); //
 }
+
 // source: "../../../ext/jinx-rust/tests/samples/expressions/literal.rs"

@@ -742,4 +742,5 @@ c!(pub(in path::to));
 c!(pub(in ::path::to));
 c!(pub(in self::path::to));
 c!(pub(in super::path::to));
+
 // source: "../../../ext/jinx-rust/tests/samples/macro/macro.invocation.rs"

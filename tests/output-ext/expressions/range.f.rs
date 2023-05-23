@@ -170,4 +170,5 @@ fn f() {
   a()..b()
 }
 fn foo(-128..=127: i8) {}
+
 // source: "../../../ext/jinx-rust/tests/samples/expressions/range.rs"

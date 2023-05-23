@@ -34,4 +34,5 @@ fn a() {
   ]
 }
 const A: *const u8 = &0 as *const _ as *const Q as *const u8;
+
 // source: "../../../ext/jinx-rust/tests/samples/types/cast.rs"

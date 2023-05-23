@@ -7,4 +7,5 @@ fn f() {
     const { one() } => {}
   }
 }
+
 // source: "../../../ext/jinx-rust/tests/samples/features/inline_const_pat.rs"

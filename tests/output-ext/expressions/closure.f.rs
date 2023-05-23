@@ -191,4 +191,5 @@ type Ty = [
     0
   }
 ];
+
 // source: "../../../ext/jinx-rust/tests/samples/expressions/closure.rs"

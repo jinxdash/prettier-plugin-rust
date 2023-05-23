@@ -98,4 +98,5 @@ enum E<'a, 'b, 'c: 'b> {
 }
 
 pub enum X<D> where D: Copy + Debug + Eq {}
+
 // source: "../../../ext/jinx-rust/tests/samples/statements/enum.rs"

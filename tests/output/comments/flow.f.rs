@@ -99,4 +99,5 @@ return A {
   // _______
   bar: baz() + 1,
 };
+
 // source: "../../samples/comments/flow.rs"

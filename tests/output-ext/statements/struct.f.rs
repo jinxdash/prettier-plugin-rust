@@ -60,4 +60,5 @@ struct S(<AT as A<DT>>::AS);
 pub struct A<I> where I: B<C: D> {
   w: <I::E as F>::G,
 }
+
 // source: "../../../ext/jinx-rust/tests/samples/statements/struct.rs"

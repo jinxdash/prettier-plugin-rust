@@ -52,14 +52,14 @@ import {
 	printUnionPattern,
 } from "./core";
 import { DCM, Doc, group, hardline, ifBreak, indent, join, line, softline, willBreak } from "./external";
-import { f, getOptions, getParentNode, pathCall, type print, sg_duo, sg_single } from "./plugin";
+import { f, getOptions, getParentNode, pathCall, sg_duo, sg_single, type print } from "./plugin";
 import { needsParens, stmtNeedsSemi } from "./styling";
 import {
 	BlockLikeMacroInvocation,
 	CallLikeMacroInvocation,
-	isTransformed,
 	is_BlockLikeMacroInvocation,
 	is_CallLikeMacroInvocation,
+	isTransformed,
 } from "./transform";
 
 type nPrint<T extends Node> = (print: print<T>, node: T) => Doc | never;

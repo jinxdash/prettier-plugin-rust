@@ -264,4 +264,5 @@ map(|[resource]| A {
     this.resource = resource;
   },
 });
+
 // source: "../../samples/common/closures.rs"

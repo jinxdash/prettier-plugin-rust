@@ -153,4 +153,5 @@ pub fn main() {
     return;
   };
 }
+
 // source: "../../../ext/jinx-rust/tests/samples/expressions/flow_expr.rs"

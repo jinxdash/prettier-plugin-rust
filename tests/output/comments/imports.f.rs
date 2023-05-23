@@ -6,4 +6,5 @@ use list::{
 };
 use test::{ Other /* C   */, /*   A   */ self /*    B     */ };
 use ::{ /* Pre-comment! */ Foo, Bar /* comment */ };
+
 // source: "../../samples/comments/imports.rs"

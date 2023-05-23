@@ -19,4 +19,5 @@ fn   f()    {
 	  1     + 1;
 	}
 }
+
 // source: "../../samples/comments/ignore.attr.rs"

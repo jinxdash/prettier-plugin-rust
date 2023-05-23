@@ -104,4 +104,5 @@ a =
 0 ^
   // 35_______
   x;
+
 // source: "../../samples/comments/binaryish.rs"

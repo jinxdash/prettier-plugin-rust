@@ -61,4 +61,5 @@ struct FooBarrrrrrrr<
       1
   }
 >;
+
 // source: "../../../ext/jinx-rust/tests/samples/features/const_generics_defaults.rs"

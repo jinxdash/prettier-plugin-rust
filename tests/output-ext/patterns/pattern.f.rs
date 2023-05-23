@@ -144,4 +144,5 @@ fn a() {
   let &&&&_ = &&&&1_usize;
   let &&&&&_ = &&&&&1_usize;
 }
+
 // source: "../../../ext/jinx-rust/tests/samples/patterns/pattern.rs"

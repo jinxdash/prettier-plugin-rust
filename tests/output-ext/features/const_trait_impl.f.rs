@@ -30,4 +30,5 @@ trait F {
 const fn qux<T: ~const Foo>() {}
 const fn test1<T: ~const Foo + Bar>() {}
 const fn test2<T: ~const Foo + ~const Bar>() {}
+
 // source: "../../../ext/jinx-rust/tests/samples/features/const_trait_impl.rs"

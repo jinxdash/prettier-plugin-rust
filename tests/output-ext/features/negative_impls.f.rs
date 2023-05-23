@@ -13,4 +13,5 @@ impl !Sync for A {}
 impl<'a, T> !MyPredicate<'a> for &T where T: 'a {}
 impl<T> !Foo for &T where T: 'static {}
 impl<E> !Future for Option<E> where E: Sized {}
+
 // source: "../../../ext/jinx-rust/tests/samples/features/negative_impls.rs"

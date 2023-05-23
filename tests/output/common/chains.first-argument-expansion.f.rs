@@ -187,4 +187,5 @@ db.collection("indexOptionDefault").createIndex(
     done();
   }
 );
+
 // source: "../../samples/common/chains.first-argument-expansion.rs"
