@@ -39,7 +39,6 @@ import {
 	is_Attribute,
 	is_AttributeOrDocComment,
 	is_AwaitExpression,
-	is_bitshiftOperator,
 	is_BitwiseOperator,
 	is_CallExpression,
 	is_ClosureFunctionExpression,
@@ -65,9 +64,9 @@ import {
 	is_LiteralNumberLike,
 	is_LogicalExpression,
 	is_LoopBlockExpression,
+	is_MatchExpression,
 	is_MatchExpressionCase,
 	is_MemberExpression,
-	is_multiplicativeOperator,
 	is_NodeWithBodyNoBody,
 	is_NodeWithMaybePatternNoUnionBody,
 	is_OperationExpression,
@@ -90,6 +89,8 @@ import {
 	is_UnionPattern,
 	is_WhileBlockExpression,
 	is_YieldExpression,
+	is_bitshiftOperator,
+	is_multiplicativeOperator,
 } from "jinx-rust/utils";
 import { exit, last_of } from "../utils/common";
 import { CF, hasBreaklineAfter, hasComment } from "./comments";
@@ -384,14 +385,32 @@ const NoNode = { nodeType: 0 } as MissingNode;
 
 export function needsSemi(parent: NodeWithBody, stmt: ExpressionStatement, disregardExprType = false) {
 	const expr = disregardExprType ? NoNode : stmt.expression!;
+	const hadSemi = !disregardExprType && stmt.semi;
+
 	return (
 		!!expr &&
-		(shouldNeverSemi()
-			? false //
+		(forcePreserveSemi()
+			? true
+			: shouldNeverSemi()
+			? false
 			: shouldPreserveSemi()
-			? (!disregardExprType && stmt.semi) || shouldAlwaysSemi() || canAutoCompleteSemi()
+			? hadSemi || shouldAlwaysSemi() || canAutoCompleteSemi()
 			: true)
 	);
+
+	function forcePreserveSemi() {
+		/** Rust Compiler bug (preserve optional semicolon) */
+		// rust-lang/rust#70844 https://github.com/rust-lang/rust/issues/70844
+		// issue#22 https://github.com/jinxdash/prettier-plugin-rust/issues/22
+		return (
+			hadSemi &&
+			stmt === last_of(parent.body!) &&
+			((is_IfBlockExpression(expr) &&
+				hasLetScrutineeCondition(expr) &&
+				!(is_LetScrutinee(expr.condition) && is_Identifier(expr.condition.expression))) ||
+				(is_MatchExpression(expr) && !is_Identifier(expr.expression)))
+		);
+	}
 	function shouldNeverSemi() {
 		return is_ExpressionWithBodyOrCases_or_BlockLikeMacroInvocation(expr);
 	}

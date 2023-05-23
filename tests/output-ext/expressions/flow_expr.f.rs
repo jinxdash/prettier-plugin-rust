@@ -131,7 +131,7 @@ pub fn main() {
           _ => {
             return;
           }
-        }
+        };
       } else if (
         {
           return;
