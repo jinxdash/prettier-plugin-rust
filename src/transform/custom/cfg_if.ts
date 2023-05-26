@@ -14,7 +14,7 @@ import {
 } from "jinx-rust";
 import { insertNodes, start, transferAttributes } from "jinx-rust/utils";
 import { assert, iLast } from "../../utils/common";
-import { isGroup, isIdent, isToken } from "../utils";
+import { isGroup, isIdent, isToken } from "./utils";
 
 export function transform_macro_cfg_if(segments: MacroInvocation["segments"]) {
 	const danglingAttributes: Snippet["danglingAttributes"] = [];

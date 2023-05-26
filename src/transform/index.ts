@@ -84,6 +84,7 @@ import {
 	spliceAll,
 	try_eval,
 } from "../utils/common";
+import { transform_simpleAttrSyntax } from "./custom/attribute";
 import { transform_macro_cfg_if } from "./custom/cfg_if";
 
 export interface ExpressionLikeAttribute extends Attribute {
@@ -211,13 +212,12 @@ export function isTransformed(node: Node) {
 
 const transform: { [K in NodeType]?: (node: NTMap[K]) => void } = {
 	[NodeType.Attribute](node) {
-		maybe_transform_node(
-			node as ExpressionLikeAttribute,
-			() => rs.toCallExpressionArguments(node.segments),
-			(node, snippet) => {
-				node.segments = snippet.ast;
-			}
-		);
+		try_eval(() => {
+			node.segments = rs.createLocArray(node.segments.dk, node.segments.loc.clone(), [
+				transform_simpleAttrSyntax(node.segments),
+			]) as any;
+			transformed.add(node);
+		});
 	},
 	[NodeType.MacroInlineRuleDeclaration](node) {
 		node.match.dk = DelimKind["()"];
@@ -538,7 +538,7 @@ export function getCommentChildNodes(n: any): Node[] {
 	return children;
 
 	function getTransformedNodeChildren(node: Node) {
-		if (is_Program(node)) node.comments ??= []; // prettier deletes it
+		if (is_Program(node)) node.comments ??= []; // prettier core deletes this property
 		const children = getNodeChildren(node);
 
 		if (is_NodeWithBodyNoBody(node)) {
