@@ -30,28 +30,28 @@ import {
 	ownStart,
 	start,
 } from "jinx-rust/utils";
-import { assert, exit, iLast, last_of, maybe_last_of, Narrow } from "../utils/common";
+import { is_CallExpression_or_CallLikeMacroInvocation } from "../transform";
+import { Narrow, assert, exit, iLast, last_of, maybe_last_of } from "../utils/common";
 import { is_MemberAccessLike, is_xVariableEqualishLike } from "./core";
 import {
 	AnyComment,
-	breakParent,
-	cursor,
 	CustomOptions,
 	DCM,
 	Doc,
+	MutatedAttribute,
+	NodeWithComments,
+	PrettierCommentInfo,
+	breakParent,
+	cursor,
 	hardline,
 	indent,
 	join,
 	line,
 	lineSuffix,
 	literalline,
-	MutatedAttribute,
-	NodeWithComments,
-	PrettierCommentInfo,
 } from "./external";
 import { assertPathAtNode, canAttachComment, getAllComments, getContext, getNode, getOptions, pathCallEach } from "./plugin";
 import { shouldPrintOuterAttributesAbove } from "./styling";
-import { is_CallExpression_or_CallLikeMacroInvocation } from "./transform";
 
 function addCommentHelper(node: Node, comment: AnyComment, leading = false, trailing = false) {
 	__DEV__: assert(!handled(comment));

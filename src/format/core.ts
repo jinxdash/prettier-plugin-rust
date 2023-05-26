@@ -49,7 +49,6 @@ import {
 	RangeNode,
 	RestPattern,
 	ReturnExpression,
-	SourceFile,
 	StructDeclaration,
 	StructLiteral,
 	StructLiteralPropertySpread,
@@ -151,6 +150,7 @@ import {
 	ownStart,
 	start,
 } from "jinx-rust/utils";
+import { BlockLikeMacroInvocation, CallLikeMacroInvocation, is_CallExpression_or_CallLikeMacroInvocation } from "../transform";
 import { AssertTypesEq, Identity, Map_get, Narrow, assert, exit, find_last, flat, iLast, last_of, spread } from "../utils/common";
 import {
 	CF,
@@ -216,7 +216,6 @@ import {
 	print,
 } from "./plugin";
 import { canInlineBlockBody, emptyContent, needsParens, shouldFlatten } from "./styling";
-import { BlockLikeMacroInvocation, CallLikeMacroInvocation, is_CallExpression_or_CallLikeMacroInvocation } from "./transform";
 
 export function isNoopExpressionStatement(node: Node) {
 	return is_ExpressionStatement(node) && undefined === node.expression && !hasAttributes(node) && !hasComment(node);

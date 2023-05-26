@@ -92,6 +92,7 @@ import {
 	is_bitshiftOperator,
 	is_multiplicativeOperator,
 } from "jinx-rust/utils";
+import { BlockLikeMacroInvocation, is_BlockLikeMacroInvocation, is_CallExpression_or_CallLikeMacroInvocation } from "../transform";
 import { exit, last_of } from "../utils/common";
 import { CF, hasBreaklineAfter, hasComment } from "./comments";
 import { flowControlExpressionNeedsOuterParens } from "./core";
@@ -109,7 +110,6 @@ import {
 	pathCallParentOf,
 	stackIncludes,
 } from "./plugin";
-import { BlockLikeMacroInvocation, is_BlockLikeMacroInvocation, is_CallExpression_or_CallLikeMacroInvocation } from "./transform";
 
 export function needsOuterSoftbreakParens(node: Node) {
 	const parent = getParentNode(node);
