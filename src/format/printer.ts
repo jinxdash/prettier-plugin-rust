@@ -11,6 +11,13 @@ import {
 	is_StructLiteral,
 	start,
 } from "jinx-rust/utils";
+import {
+	BlockLikeMacroInvocation,
+	CallLikeMacroInvocation,
+	is_BlockLikeMacroInvocation,
+	is_CallLikeMacroInvocation,
+	isTransformed,
+} from "../transform";
 import { exit } from "../utils/common";
 import { hasComment, print_comment } from "./comments";
 import { isSimpleType } from "./complexity";
@@ -54,13 +61,6 @@ import {
 import { DCM, Doc, group, hardline, ifBreak, indent, join, line, softline, willBreak } from "./external";
 import { f, getOptions, getParentNode, pathCall, sg_duo, sg_single, type print } from "./plugin";
 import { needsParens, stmtNeedsSemi } from "./styling";
-import {
-	BlockLikeMacroInvocation,
-	CallLikeMacroInvocation,
-	is_BlockLikeMacroInvocation,
-	is_CallLikeMacroInvocation,
-	isTransformed,
-} from "./transform";
 
 type nPrint<T extends Node> = (print: print<T>, node: T) => Doc | never;
 

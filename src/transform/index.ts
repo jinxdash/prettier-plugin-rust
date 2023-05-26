@@ -48,13 +48,11 @@ import {
 	is_ExpressionStatement,
 	is_ExpressionWithBodyOrCases,
 	is_FlowControlExpression,
-	is_Identifier,
 	is_IfBlockExpression,
 	is_MacroInvocation,
 	is_Node,
 	is_NodeWithBodyNoBody,
 	is_NodeWithBodyOrCases,
-	is_PathNode,
 	is_Program,
 	is_PunctuationToken,
 	is_ReassignmentNode,
@@ -69,6 +67,10 @@ import {
 	transferAttributes,
 	unsafe_set_nodeType,
 } from "jinx-rust/utils";
+import { isPrettierIgnoreAttribute, setPrettierIgnoreTarget } from "../format/comments";
+import { is_StructSpread } from "../format/core";
+import { CustomOptions } from "../format/external";
+import { getOptions } from "../format/plugin";
 import {
 	Array_replace,
 	Array_splice,
@@ -82,11 +84,7 @@ import {
 	spliceAll,
 	try_eval,
 } from "../utils/common";
-import { isPrettierIgnoreAttribute, setPrettierIgnoreTarget } from "./comments";
-import { is_StructSpread } from "./core";
-import { CustomOptions } from "./external";
-import { transform_macro_cfg_if } from "./macros/cfg_if";
-import { getOptions } from "./plugin";
+import { transform_macro_cfg_if } from "./custom/cfg_if";
 
 export interface ExpressionLikeAttribute extends Attribute {
 	segments: LocArray<any, "[]">;

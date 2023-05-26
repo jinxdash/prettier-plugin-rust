@@ -21,6 +21,7 @@ import {
 	is_UnionPattern,
 	start,
 } from "jinx-rust/utils";
+import { getCommentChildNodes, isTransformed, transform_ast } from "../transform";
 import { Narrow, assert, color, each, exit, iLast, is_array, map_tagged_template, print_string } from "../utils/common";
 import {
 	CF,
@@ -41,7 +42,6 @@ import { isNoopExpressionStatement, maybeEmptyLine } from "./core";
 import { AstPath, CustomOptions, Doc, Plugin, Symbol_comments, group, hardline, indent, line, softline } from "./external";
 import { printer } from "./printer";
 import { needsInnerParens, needsOuterSoftbreakParens, shouldPrintOuterAttributesAbove } from "./styling";
-import { getCommentChildNodes, isTransformed, transform_ast } from "./transform";
 
 export function is_printing_macro() {
 	return getContext().path.stack.some((node) => is_Node(node) && (is_MacroInvocation(node) || is_Attribute(node)));
